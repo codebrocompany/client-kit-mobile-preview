@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Client Kit — Template Library</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-page: #0a0a0a; --bg-card: #111111; --bg-card-hover: #141414;
+      --border-default: #1e1e1e; --border-subtle: #161616; --border-accent: #c9a84c;
+      --text-primary: #ffffff; --text-muted: #9c9c9c; --text-faint: #777777;
+      --gold: #c9a84c; --gold-dim: #9a7a35; --gold-glow: rgba(201,168,76,0.08);
+      --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    body { background: var(--bg-page); color: var(--text-primary); font-family: var(--font-stack); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
+
+    /* Header */
+    .site-header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border-default); }
+    .brand { font-size: 13px; font-weight: 700; letter-spacing: -0.2px; color: var(--text-primary); margin-bottom: 20px; }
+    .brand span { color: var(--gold); }
+    .headline { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); margin-bottom: 8px; }
+    .sub { font-size: 14px; color: var(--text-muted); }
+    .meta-row { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+    .meta-item { font-size: 12px; color: var(--text-faint); display: flex; align-items: center; gap: 6px; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    /* Badges */
+    .badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+
+    /* Section Labels */
+    .section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border-subtle); }
+    .section-label span { color: var(--gold); }
+    .section-group { margin-bottom: 40px; }
+
+    /* Template Grid */
+    .grid-core { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+
+    /* Template Cards */
+    .template-card { display: block; background: var(--bg-card); border: 1px solid var(--border-default); border-radius: 4px; padding: 16px 18px; text-decoration: none; color: inherit; transition: border-color 0.15s, background 0.15s; }
+    .template-card:hover { border-color: var(--gold-dim); background: var(--bg-card-hover); }
+    .template-card:hover .card-num { color: var(--gold); }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .card-num { font-size: 10px; font-weight: 700; color: var(--text-faint); letter-spacing: 0.1em; transition: color 0.15s; }
+    .card-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .card-desc { font-size: 11px; color: var(--text-muted); line-height: 1.55; }
+    .card-footer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 8px; }
+    .card-tag { font-size: 10px; color: var(--text-faint); }
+    .card-arrow { margin-left: auto; font-size: 11px; color: var(--text-faint); }
+    .template-card:hover .card-arrow { color: var(--gold); }
+
+    /* Upsell Block */
+    .upsell-block { background: var(--bg-card); border: 1px solid var(--border-default); border-radius: 4px; padding: 28px 28px 24px; }
+    .upsell-title { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .upsell-headline { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.3px; }
+    .upsell-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+    .includes-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; }
+    .includes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 12px; margin-bottom: 22px; }
+    .include-item { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .include-item::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--gold-dim); flex-shrink: 0; }
+
+    /* How To Use */
+    .howto-block { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 22px 24px; margin-top: 12px; }
+    .howto-title { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 14px; }
+    .howto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .howto-item { }
+    .howto-step { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .howto-text { font-size: 12px; color: var(--text-muted); line-height: 1.65; }
+    .howto-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* Footer */
+    .site-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+    .footer-left { font-size: 11px; color: var(--text-faint); }
+    .footer-right { font-size: 11px; color: var(--text-faint); }
+    .editable-grid { gap: 9px; margin-bottom: 0; }
+    .editable-grid .include-item { min-height: 45px; justify-content: space-between; gap: 8px; padding: 11px 12px; background: #0d0d0d; border: 1px solid var(--border-default); border-radius: 3px; text-decoration: none; transition: border-color .15s, color .15s; }
+    .editable-grid .include-item::before { display: none; }
+    .editable-grid .include-item span { margin-left: auto; color: var(--gold); }
+    .editable-grid .include-item:hover, .editable-grid .include-item:focus-visible { border-color: var(--gold); color: var(--text-primary); }
+    @media (max-width: 680px) { .wrapper { padding: 30px 20px; } .grid-core, .howto-grid { grid-template-columns: 1fr; } .editable-grid { grid-template-columns: 1fr 1fr; } .site-footer { gap: 10px; flex-wrap: wrap; } }
+    @media (max-width: 420px) { .editable-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="site-header">
+    <div class="brand">The Client Kit<span>.</span></div>
+    <div class="headline">Template Library</div>
+    <div class="sub">14 editable templates for every stage of your client journey — from first agreement to final thank you.</div>
+    <div class="meta-row">
+      <div class="meta-item"><div class="meta-dot"></div>14 available documents</div>
+      <div class="meta-item"><div class="meta-dot"></div>Every template opens directly</div>
+      <div class="meta-item"><div class="meta-dot"></div>Dark theme · Print-ready · Self-contained HTML</div>
+    </div>
+  </header>
+
+  <!-- CORE TEMPLATES -->
+  <div class="section-group">
+    <div class="section-label">Core Templates &nbsp;<span>·</span>&nbsp; Open and edit directly</div>
+    <div class="grid-core">
+      <a class='template-card' href='templates/client-agreement.html'>
+        <div class="card-top">
+          <div class="card-num">TEMPLATE · 01</div>
+        </div>
+        <div class="card-title">Client Agreement</div>
+        <div class="card-desc">Simplified 1-page contract covering scope, payment, revisions, IP, cancellation, and signatures.</div>
+        <div class="card-footer">
+          <span class="card-tag">Open &amp; edit</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a class='template-card' href='templates/invoice.html'>
+        <div class="card-top">
+          <div class="card-num">TEMPLATE · 02</div>
+        </div>
+        <div class="card-title">Invoice</div>
+        <div class="card-desc">Clean, minimal invoice with line items, payment instructions, and notes field. Instantly useful and visually sharp.</div>
+        <div class="card-footer">
+          <span class="card-tag">Open &amp; edit</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ADDITIONAL EDITABLE TEMPLATES -->
+  <div class="section-group">
+    <div class="section-label">More Templates <span>·</span> Open and edit directly</div>
+    <div class="upsell-block">
+      <div class="upsell-title">THE CLIENT KIT — EDITABLE COLLECTION</div>
+      <div class="upsell-headline">All templates, ready to open.</div>
+      <div class="upsell-sub">Select any document below to edit and save it. Every template is included in this library.</div>
+
+      <div class="includes-label">Choose a template</div>
+      <div class="includes-grid editable-grid">
+        <a class="include-item" href="complete/agreement-full.html?template=agreement-full">Client Agreement <span>↗</span></a>
+        <a class="include-item" href="complete/invoice-full.html?template=invoice-full">Invoice <span>↗</span></a>
+        <a class="include-item" href="complete/welcome-doc.html?template=welcome-doc">Welcome Doc <span>↗</span></a>
+        <a class="include-item" href="complete/discovery-call.html?template=discovery-call">Discovery Call <span>↗</span></a>
+        <a class="include-item" href="complete/project-brief.html?template=project-brief">Project Brief <span>↗</span></a>
+        <a class="include-item" href="complete/task-list.html?template=task-list">Task List <span>↗</span></a>
+        <a class="include-item" href="complete/delivery-guide.html?template=delivery-guide">Delivery Guide <span>↗</span></a>
+        <a class="include-item" href="complete/monthly-report.html?template=monthly-report">Monthly Report <span>↗</span></a>
+        <a class="include-item" href="complete/thank-you-doc.html?template=thank-you-doc">Thank You Doc <span>↗</span></a>
+        <a class="include-item" href="complete/feedback-request.html?template=feedback-request">Feedback Request <span>↗</span></a>
+        <a class="include-item" href="complete/package-menu.html?template=package-menu">Package Menu <span>↗</span></a>
+        <a class="include-item" href="complete/b-roll-checklist.html?template=b-roll-checklist">B-Roll Checklist <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="section-group">
+    <div class="section-label">How to Use <span>·</span> Quick guide</div>
+    <div class="howto-block">
+      <div class="howto-grid">
+        <div class="howto-item">
+          <div class="howto-step">Edit text</div>
+          <div class="howto-text">Click any text directly on the page — it becomes editable instantly. Type to replace it with your own content.</div>
+        </div>
+        <div class="howto-item">
+          <div class="howto-step">Save your edits</div>
+          <div class="howto-text">Click <strong>Save Edits ↓</strong> to download a filled HTML file with all your changes saved inside it.</div>
+        </div>
+        <div class="howto-item">
+          <div class="howto-step">Save as PDF</div>
+          <div class="howto-text">Click <strong>Save as PDF</strong> (or Cmd+P on Mac / Ctrl+P on Windows). Set paper to A4, margins to None, and enable <strong>Background graphics</strong> so the dark theme prints correctly.</div>
+        </div>
+        <div class="howto-item">
+          <div class="howto-step">Remove sections</div>
+          <div class="howto-text">Hover over any section to reveal the <strong>×</strong> delete button. Press <strong>Cmd+Z</strong> (Mac) or <strong>Ctrl+Z</strong> (Windows) to undo a deletion.</div>
+        </div>
+        <div class="howto-item">
+          <div class="howto-step">Switch theme</div>
+          <div class="howto-text">Use the <strong>☀ Light</strong> button to toggle between dark and light mode. Light mode is useful for clients who prefer a clean white document.</div>
+        </div>
+        <div class="howto-item">
+          <div class="howto-step">Placeholders</div>
+          <div class="howto-text">All <strong>[BRACKET]</strong> text is a placeholder. Click to edit and replace with your business name, client name, or relevant details.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-left">The Client Kit · Editable document library</div>
+    <div class="footer-right">14 templates · Local use</div>
+  </footer>
+
+</div>
+</body>
+</html>
