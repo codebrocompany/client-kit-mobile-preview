@@ -13,9 +13,10 @@ documents. The supplied original agreement and invoice remain separate from
 | --- | --- |
 | Library access | 14 document links open directly; no purchase button. |
 | Reference labels | Agreement: 29/29; invoice: 24/24 field/section labels match the two HTML files in the supplied ZIP. |
-| Direct editing | Values and body text remain editable; supplied headings and labels are now fixed. Bracketed full-name values clear on focus in both editor types. |
-| Original forms | Agreement and invoice load without delete crosses. Original-form Save Edits, Add logo, and PNG actions were exercised locally. |
-| New documents | Detailed invoice loads with fixed labels, Add Section and Add Field; PNG was downloaded locally with a test logo. Calculated amounts are read-only outputs. |
+| Direct editing | Headings, labels, values, and body text are editable. Bracketed full-name values clear on focus in both editor types. |
+| Removal | One red cross removes a full label-value pair, list item, table row, or section. Remaining content reflows; Undo restores the last removal. |
+| Original forms | Agreement and invoice use grouped field-pair controls; Save Edits, Add logo, and PNG remain available. |
+| New documents | All 12 pages use the same grouped removal and editing rules. Calculated invoice amounts remain manually editable, with recalculation on dependent inputs. |
 | Mobile | All 14 pages were checked at 390px viewport width; none produced page-level horizontal overflow. |
 | Theme and print | Light mode persists across the library and all 14 documents. In both screen themes, all 14 print-media checks showed white document backgrounds, dark text, no page-level overflow, and hidden edit controls. |
 | Actual print review | Safari A4 invoice PDF was generated and both pages were visually inspected after the print-layout update. US Letter was checked in Safari's print preview. |

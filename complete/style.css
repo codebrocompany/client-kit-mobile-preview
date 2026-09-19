@@ -16,3 +16,21 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .add-row{border:1px solid var(--line);border-radius:3px;background:var(--panel2);color:var(--gold);font-size:11px;font-weight:700;padding:7px 10px;margin:10px 0 0}
 .add-row:hover{border-color:var(--gold)}
 @media print{.add-row,.add-field-button,.remove-row,.row-action{display:none!important}.editable{border-bottom:0!important}}
+.fields{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}
+.removable-unit{position:relative}
+.unit-remove{position:absolute;top:0;right:0;z-index:2;width:28px;height:28px;display:grid;place-items:center;background:#3e1717;border:1px solid #a84a4a;border-radius:4px;color:#ffb5b5;font-size:19px;font-weight:700;line-height:1;cursor:pointer}
+.unit-remove:hover,.unit-remove:focus-visible{background:#7a2525;color:#fff;border-color:#e36969}
+.doc-section>.unit-remove{top:17px}
+.doc-section>h2{padding-right:38px;min-height:28px}
+.field{position:relative;padding-right:34px;min-width:0}
+.field label{min-height:20px;overflow-wrap:anywhere}
+.doc-section .text-unit,.doc-description{padding-right:34px}
+.title-unit{position:relative}.title-unit .doc-title{padding-right:38px}.title-unit .unit-remove{top:0}
+.brand-text-unit,.footer-unit,.doc-label{position:relative;padding-right:34px}
+.brand-text-unit .editable,.doc-label .editable,.footer-unit .editable{display:inline;min-height:0;padding:0;border-bottom:1px dashed #a98745;font:inherit;letter-spacing:inherit;color:inherit}
+.brand-text-unit+.brand-text-unit{font-size:10px;font-weight:550;letter-spacing:.05em;color:var(--paper-sub);margin-top:4px}
+.doc-table .row-action{width:32px!important;min-width:32px;text-align:left;padding:5px 2px}
+.row-action .unit-remove{position:static;width:26px;height:26px}
+.doc-table th:last-child:not(.row-action){width:auto;text-align:left}
+.total-row{position:relative;padding-right:34px}.total-row .unit-remove{top:10px}
+@media print{.unit-remove,.doc-table .row-action{display:none!important}.doc-section>h2,.field,.doc-section .text-unit,.doc-description,.brand-text-unit,.footer-unit,.doc-label,.total-row{padding-right:0!important}}

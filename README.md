@@ -21,15 +21,18 @@ Use the public mobile-test preview at
 folder with a static HTTP server and open `index.html`. The 12 new documents
 are self-contained HTML. Direct `file://` opening was not verified in the
 available browser environment.
-Tap a value to edit it. A bracketed field clears on focus. Supplied titles and
-labels stay fixed; use **+ Section** and **+ Field** to add your own content.
-There are no hidden delete crosses. **Add logo** accepts PNG, JPG, or WebP up
+Tap any heading, label, value, or body text to edit it. A bracketed field
+clears on focus. Use **+ Section** and **+ Field** to add your own content.
+The red **×** removes one complete field pair, row, text block, or section;
+the layout reflows immediately. **Undo** restores the last removal.
+**Add logo** accepts PNG, JPG, or WebP up
 to 1.5 MB; the logo is remembered in this browser across templates. **Save
 Edits** downloads editable HTML with the logo embedded. **Save as PDF** opens
 the browser print dialog; **Save as PNG** downloads a full-length image. PNG
-and print exports use a light paper background. The library and all documents
+and print exports use a light paper background and hide editing controls. The library and all documents
 also have a persistent light/dark screen theme. The detailed invoice calculates
-its line amounts and totals from quantity, rate, and tax rate; the supplied
+its line amounts and totals from quantity, rate, and tax rate; those outputs
+can also be manually edited until a dependent input changes. The supplied
 original invoice retains editable amount text without automatic calculation.
 
 For printing, choose A4 or US Letter and turn off the browser's "Print headers

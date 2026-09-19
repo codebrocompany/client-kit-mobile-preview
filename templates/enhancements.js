@@ -15,15 +15,118 @@
     toast.timer = setTimeout(() => bar.remove(), 3300);
   };
 
-  // The original template added a delete cross to every nested block. Remove it
-  // and keep the standard document structure intact.
-  doc.querySelectorAll('.del-btn').forEach(button => button.remove());
-  doc.querySelectorAll('.section-heading,.field-label,.doc-title,.invoice-title,.doc-subtitle,.clause-num,.footer-page,.doc-table th,.totals-row>span:not(.totals-amount)').forEach(node => {
-    if (node.dataset.custom === 'true') return;
-    node.contentEditable = 'false';
-    node.removeAttribute('role');
+  // Replace the source template's nested delete controls with one control per
+  // meaningful unit. A label and its value always move together.
+  doc.querySelectorAll('.del-btn,.unit-remove').forEach(button => button.remove());
+  doc.querySelectorAll('.section-heading,.field-label,.doc-title,.invoice-title,.doc-subtitle,.clause-num,.footer-page,.doc-table th,.totals-row>span:not(.totals-amount),.logo-block span').forEach(node => {
+    node.contentEditable = 'true';
+    node.spellcheck = false;
   });
-  doc.querySelectorAll('.logo-block span').forEach(node => node.contentEditable = 'false');
+  const removedItems = [];
+  function cross(target, label, holder = target) {
+    target.classList.add('removable-unit');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'unit-remove';
+    button.textContent = '×';
+    button.setAttribute('aria-label', `Remove ${label}`);
+    button.title = `Remove ${label} (Undo to restore)`;
+    button.contentEditable = 'false';
+    holder.append(button);
+  }
+  function wrapUnit(node, name, label) {
+    let unit = node.parentElement;
+    if (!unit.classList.contains(name)) {
+      unit = document.createElement('div');
+      unit.className = name;
+      node.before(unit);
+      unit.append(node);
+    }
+    cross(unit, label);
+    return unit;
+  }
+  const signatureHeading = [...doc.children].find(node => node.classList?.contains('section-heading') && node.textContent.trim() === 'Signatures');
+  if (signatureHeading) {
+    const section = document.createElement('div');
+    section.className = 'section signature-section';
+    const body = signatureHeading.nextElementSibling;
+    const grid = body?.nextElementSibling;
+    signatureHeading.before(section);
+    section.append(signatureHeading);
+    if (body) section.append(body);
+    if (grid) section.append(grid);
+  }
+  for (const label of doc.querySelectorAll('.field-label')) {
+    const existing = label.closest('.field-pair');
+    if (existing) { cross(existing, `${label.textContent.trim()} field`); continue; }
+    const next = label.nextElementSibling;
+    const previous = label.previousElementSibling;
+    const pair = label.parentElement.classList.contains('custom-field') ? label.parentElement : document.createElement('div');
+    if (pair !== label.parentElement) { pair.className = 'field-pair'; label.before(pair); }
+    else pair.classList.add('field-pair');
+    if (next && (next.classList.contains('field-value') || next.classList.contains('placeholder'))) pair.append(label, next);
+    else if (previous?.classList.contains('signature-line')) pair.append(previous, label);
+    else pair.append(label);
+    cross(pair, `${label.textContent.trim()} field`);
+  }
+  doc.querySelectorAll('.section').forEach(section => {
+    const heading = [...section.children].find(node => node.classList?.contains('section-heading'));
+    if (heading) cross(section, `${heading.textContent.trim()} section`);
+  });
+  doc.querySelectorAll('.two-col > div > .section-heading,.signature-grid > div > .section-heading,.heading-unit > .section-heading').forEach(heading => {
+    wrapUnit(heading, 'heading-unit', `${heading.textContent.trim()} heading`);
+  });
+  doc.querySelectorAll('.scope-list li,.clause-list li').forEach(item => cross(item, 'list item'));
+  doc.querySelectorAll('.doc-table').forEach(table => {
+    if (!table.parentElement.classList.contains('table-scroll')) {
+      const scroller = document.createElement('div');
+      scroller.className = 'table-scroll';
+      table.before(scroller);
+      scroller.append(table);
+    }
+    const heading = table.querySelector('thead tr');
+    if (heading && !heading.querySelector('.row-action')) {
+      const cell = document.createElement('th');cell.className = 'row-action';heading.prepend(cell);
+    }
+    table.querySelectorAll('tbody tr').forEach(row => {
+      let cell = row.querySelector(':scope > .row-action');
+      if (!cell) { cell = document.createElement('td');cell.className = 'row-action';row.prepend(cell); }
+      cross(row, 'service row', cell);
+    });
+  });
+  doc.querySelectorAll('.totals-row').forEach(row => cross(row, `${row.firstElementChild?.textContent.trim() || 'total'} row`));
+  doc.querySelectorAll('.logo-block,.logo-sub,.doc-title,.invoice-title,.doc-subtitle,.footer-brand,.footer-page,.body-text').forEach(node => {
+    wrapUnit(node, 'text-unit', node.textContent.trim().slice(0, 40) || 'text block');
+  });
+  doc.querySelectorAll('.notes-section > .field-value').forEach(node => wrapUnit(node, 'text-unit', 'notes'));
+  function refreshLayout() {
+    doc.querySelectorAll('.section-card,.callout').forEach(card => card.classList.toggle('is-empty', !card.querySelector('.field-pair')));
+  }
+  function undoRemoval() {
+    const item = removedItems.pop();
+    if (!item) { toast('Nothing to restore.'); return; }
+    item.parent.insertBefore(item.node, item.next?.parentNode === item.parent ? item.next : null);
+    refreshLayout();
+    toast('Restored.');
+  }
+  doc.addEventListener('click', event => {
+    const button = event.target.closest('.unit-remove');
+    if (!button) return;
+    event.stopPropagation();
+    const unit = button.closest('.removable-unit');
+    if (!unit) return;
+    removedItems.push({ node: unit, parent: unit.parentNode, next: unit.nextSibling });
+    unit.remove();
+    refreshLayout();
+    toast('Removed. Tap Undo to restore.');
+  });
+  $('#undo-button')?.addEventListener('click', undoRemoval);
+  document.addEventListener('keydown', event => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'z' && !event.target.closest?.('[contenteditable="true"]') && removedItems.length) {
+      event.preventDefault();undoRemoval();
+    }
+  });
+  refreshLayout();
   doc.addEventListener('focusin', event => {
     const node = event.target;
     if (node.contentEditable !== 'true') return;
@@ -37,8 +140,7 @@
 
   function makeField() {
     const wrap = document.createElement('div');
-    wrap.className = 'custom-field';
-    wrap.style.marginTop = '12px';
+    wrap.className = 'custom-field field-pair';
     const label = document.createElement('div');
     label.className = 'field-label placeholder';
     label.dataset.custom = 'true';
@@ -51,6 +153,7 @@
     value.dataset.placeholder = '[ENTER DETAILS]';
     value.textContent = '[ENTER DETAILS]';
     wrap.append(label, value);
+    cross(wrap, 'custom field');
     return wrap;
   }
   function addFieldButton(section) {
@@ -78,6 +181,7 @@
     heading.dataset.placeholder = '[NEW SECTION]';
     heading.textContent = '[NEW SECTION]';
     section.append(heading, makeField());
+    cross(section, 'new section');
     addFieldButton(section);
     doc.insertBefore(section, $('.doc-footer', doc));
     heading.scrollIntoView({ block: 'center' });
@@ -154,7 +258,7 @@
         backgroundColor: '#ffffff', scale, useCORS: true, scrollY: -window.scrollY,
         onclone: copy => {
           copy.documentElement.setAttribute('data-theme', 'light');
-          copy.querySelectorAll('.add-field-button').forEach(node => node.remove());
+          copy.querySelectorAll('.add-field-button,.unit-remove,.row-action').forEach(node => node.remove());
           copy.querySelectorAll('[contenteditable]').forEach(node => { node.style.outline = 'none'; node.style.background = 'transparent'; });
         }
       });
