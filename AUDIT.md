@@ -2,7 +2,7 @@
 
 ## Result
 
-The local library exposes 14 directly accessible documents. Purchase, "free",
+The local library exposes 18 directly accessible documents. Purchase, "free",
 trial, and promotional callouts were removed from the user-facing library and
 documents. The supplied original agreement and invoice remain separate from
 12 independently written, fully editable alternatives.
@@ -11,17 +11,17 @@ documents. The supplied original agreement and invoice remain separate from
 
 | Area | Result |
 | --- | --- |
-| Library access | 14 document links open directly; no purchase button. |
+| Library access | 18 document links open directly; no purchase button. |
 | Reference coverage | The supplied agreement and invoice keep their original core sections, with optional address, tax, approval, and legal-review fields added. |
 | Direct editing | Headings, labels, values, and body text are editable. Bracketed full-name values clear on focus in both editor types. |
 | Removal | One red cross removes a full label-value pair, list item, table row, or section. Remaining content reflows; Undo restores the last removal. |
 | Original forms | Agreement and invoice use grouped field-pair controls; local draft Save Edits, Add logo, Download HTML, and PNG remain available. |
 | New documents | All 12 pages use the same grouped removal and editing rules. Calculated invoice amounts remain manually editable, with recalculation on dependent inputs. |
-| Mobile | All 14 pages were checked at 390px viewport width; none produced page-level horizontal overflow. |
-| Theme and print | Light mode persists across the library and all 14 documents. In both screen themes, all 14 print-media checks showed white document backgrounds, dark text, no page-level overflow, and hidden edit controls. |
+| Mobile | The original 14 pages were checked at 390px; the 4 new HR pages were also checked at 390px, with no page-level horizontal overflow. |
+| Theme and print | The original 14 pages were previously checked in both screen themes for white paper and hidden edit controls. The 4 HR pages share that CSS; offer letter print media was additionally checked directly. Individual PDF exports and physical printers remain untested for the 4 HR pages. |
 | Actual print review | Safari A4 invoice PDF was generated and both pages were visually inspected after the print-layout update. US Letter was checked in Safari's print preview. |
 | Standalone routing | All 12 self-contained document URLs show their own titles and contents even without a query parameter. |
-| Packaging | The ZIP includes all 14 document pages and the bundled PNG export library. |
+| Packaging | The ZIP includes all 18 document pages and the bundled PNG export library. |
 
 ## Source and limits
 
@@ -51,3 +51,7 @@ documents. The supplied original agreement and invoice remain separate from
 - The public mobile-test preview is hosted at
   `https://codebrocompany.github.io/client-kit-mobile-preview/`. No purchase
   was made. Documents contain placeholders, not private client data.
+- Four HR drafts cover offer, relieving, experience, and termination. They
+  contain no real employee data and avoid pre-filled misconduct findings,
+  notice periods, or "all dues cleared" statements. See `HR_RESEARCH.md` for
+  the field-by-field rationale and official sources.

@@ -1,24 +1,26 @@
 # Editable Client Templates
 
-This package has 14 accessible templates: 2 adapted pages from the supplied
-source ZIP, plus 12 independently created editable alternatives. The other 12
-original source files were not supplied, so these pages are not represented as
-copies of unavailable originals.
+This package has 18 accessible templates: 2 adapted pages from the supplied
+source ZIP, 12 independently created client-document alternatives, and 4 new
+employment-document templates. The other 12 original client-document source
+files were not supplied, so those pages are not represented as copies of
+unavailable originals.
 
 ## Files
 
-- `index.html` — library with working links to all 14 templates; no purchase button.
+- `index.html` — library with working links to all 18 templates; no purchase button.
 - `templates/client-agreement.html` — supplied agreement, with promotional text removed.
 - `templates/invoice.html` — supplied invoice, with promotional text removed.
 - `templates/enhancements.js`, `templates/enhancements.css` — shared original-form editor controls.
 - `vendor/html2canvas.min.js` — bundled MIT-licensed PNG exporter.
-- `complete/*.html` — 12 new self-contained editable documents, one file each.
+- `complete/*.html` — 16 new self-contained editable documents, one file each,
+  including Offer, Relieving, Experience, and Termination Letters.
 - `complete/editor.html`, `complete/app.js`, `complete/style.css` — source files
   used to generate those 12 documents.
 
 Use the public mobile-test preview at
 `https://codebrocompany.github.io/client-kit-mobile-preview/`, or serve this
-folder with a static HTTP server and open `index.html`. The 12 new documents
+folder with a static HTTP server and open `index.html`. The 16 new documents
 are self-contained HTML. Direct `file://` opening was not verified in the
 available browser environment.
 Tap any heading, label, value, or body text to edit it. A bracketed field
@@ -46,4 +48,8 @@ orphan heading on the first.
 
 Review all placeholders, prices, payment details, and legal wording before
 sending a document to a client. No client data is sent by the local templates.
-See `AUDIT.md` for verification scope and remaining limitations.
+Employment letters must also be checked against actual HR/payroll records,
+contracts, policies, and applicable law before issue. Sensitive employee details
+stored with Save Edits remain in unencrypted browser storage on this device;
+avoid shared devices and use secure storage for downloaded backups. See
+`AUDIT.md` and `HR_RESEARCH.md` for verification scope and remaining limits.
