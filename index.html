@@ -17,7 +17,9 @@
     .wrapper { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
 
     /* Header */
-    .site-header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border-default); }
+    .site-header { position: relative; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border-default); }
+    .theme-toggle { position: absolute; top: 0; right: 0; padding: 7px 11px; border: 1px solid var(--border-default); border-radius: 3px; background: var(--bg-card); color: var(--text-primary); font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--gold); outline-offset: 3px; }
     .brand { font-size: 13px; font-weight: 700; letter-spacing: -0.2px; color: var(--text-primary); margin-bottom: 20px; }
     .brand span { color: var(--gold); }
     .headline { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); margin-bottom: 8px; }
@@ -78,6 +80,8 @@
     .editable-grid .include-item::before { display: none; }
     .editable-grid .include-item span { margin-left: auto; color: var(--gold); }
     .editable-grid .include-item:hover, .editable-grid .include-item:focus-visible { border-color: var(--gold); color: var(--text-primary); }
+    body.light { color-scheme: light; --bg-page: #eef1f3; --bg-card: #ffffff; --bg-card-hover: #f7f8f9; --border-default: #cbd2d8; --border-subtle: #dce2e6; --border-accent: #745515; --text-primary: #161a1d; --text-muted: #46515a; --text-faint: #626d76; --gold: #745515; --gold-dim: #5d420b; --gold-glow: rgba(116,85,21,0.06); }
+    body.light .editable-grid .include-item { background: #f7f8f9; }
     @media (max-width: 680px) { .wrapper { padding: 30px 20px; } .grid-core, .howto-grid { grid-template-columns: 1fr; } .editable-grid { grid-template-columns: 1fr 1fr; } .site-footer { gap: 10px; flex-wrap: wrap; } }
     @media (max-width: 420px) { .editable-grid { grid-template-columns: 1fr; } }
   </style>
@@ -87,12 +91,13 @@
 
   <header class="site-header">
     <div class="brand">The Client Kit<span>.</span></div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">Light mode</button>
     <div class="headline">Template Library</div>
     <div class="sub">14 editable templates for every stage of your client journey — from first agreement to final thank you.</div>
     <div class="meta-row">
       <div class="meta-item"><div class="meta-dot"></div>14 available documents</div>
       <div class="meta-item"><div class="meta-dot"></div>Every template opens directly</div>
-      <div class="meta-item"><div class="meta-dot"></div>Dark theme · Print-ready · Self-contained HTML</div>
+      <div class="meta-item"><div class="meta-dot"></div>Dark &amp; light themes · White-paper printing · Self-contained HTML</div>
     </div>
   </header>
 
@@ -166,7 +171,7 @@
         </div>
         <div class="howto-item">
           <div class="howto-step">Save as PDF</div>
-          <div class="howto-text">Click <strong>Save as PDF</strong> (or Cmd+P on Mac / Ctrl+P on Windows). Set paper to A4, margins to None, and enable <strong>Background graphics</strong> so the dark theme prints correctly.</div>
+          <div class="howto-text">Click <strong>Save as PDF</strong> (or Cmd+P on Mac / Ctrl+P on Windows). Choose A4 or Letter, turn off browser <strong>headers and footers</strong>, then save or print. Documents use white paper even when your screen is dark.</div>
         </div>
         <div class="howto-item">
           <div class="howto-step">Remove sections</div>
@@ -174,7 +179,7 @@
         </div>
         <div class="howto-item">
           <div class="howto-step">Switch theme</div>
-          <div class="howto-text">Use the <strong>☀ Light</strong> button to toggle between dark and light mode. Light mode is useful for clients who prefer a clean white document.</div>
+          <div class="howto-text">Use the <strong>Light mode</strong> button to switch the library and documents between dark and light. Your choice is remembered in this browser.</div>
         </div>
         <div class="howto-item">
           <div class="howto-step">Placeholders</div>
@@ -190,5 +195,14 @@
   </footer>
 
 </div>
+<script>
+  (function () {
+    var button = document.getElementById('theme-toggle');
+    try { if (localStorage.getItem('client-kit-theme') === 'light') document.body.classList.add('light'); } catch (error) {}
+    function sync() { var light = document.body.classList.contains('light'); button.textContent = light ? 'Dark mode' : 'Light mode'; button.setAttribute('aria-pressed', String(light)); }
+    button.addEventListener('click', function () { document.body.classList.toggle('light'); try { localStorage.setItem('client-kit-theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (error) {} sync(); });
+    sync();
+  })();
+</script>
 </body>
 </html>

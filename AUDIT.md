@@ -17,7 +17,9 @@ documents. The supplied original agreement and invoice remain separate from
 | Original forms | Agreement and invoice text editing, Save Edits reopening, theme switch, section removal, and undo were exercised. |
 | New documents | Invoice calculation and manual amount editing were exercised; saved HTML reopened with edits intact. Theme, removal, and undo were exercised on the detailed agreement. |
 | Mobile | All 14 pages were checked at 390px viewport width; none produced page-level horizontal overflow. |
-| Print CSS | The toolbar and edit controls disappear under print media. |
+| Theme and print | Light mode persists across the library and all 14 documents. In both screen themes, all 14 print-media checks showed white document backgrounds, dark text, no page-level overflow, and hidden edit controls. |
+| Actual print review | Safari A4 invoice PDF was generated and both pages were visually inspected after the print-layout update. US Letter was checked in Safari's print preview. |
+| Standalone routing | All 12 self-contained document URLs show their own titles and contents even without a query parameter. |
 | Packaging | The ZIP is checked for archive integrity and includes all 14 document pages. |
 
 ## Source and limits
@@ -29,8 +31,11 @@ documents. The supplied original agreement and invoice remain separate from
 - The original two documents retain their supplied wording and field details,
   except promotional/draft UI was removed and navigation/mobile styling was
   improved. They are not recalculating financial forms.
-- Print styling was inspected, but an actual generated PDF was not visually
-  inspected. Direct `file://` opening was not testable in this browser.
+- The original invoice's A4 print is two pages; the payment heading and fields
+  stay together on page two. The other 13 documents were checked with print
+  media, but not individually saved as PDFs. Physical-printer and mobile print
+  output remain untested. Direct `file://` opening was not testable in the
+  available browser.
 - The example contract clauses, tax figures, payment details, and business
   placeholders need professional/user review before client use.
 - The public mobile-test preview is hosted at
