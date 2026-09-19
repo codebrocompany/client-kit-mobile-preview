@@ -103,16 +103,24 @@
       .section-heading { break-after: avoid; }
     }
   </style>
+  <link rel="stylesheet" href="enhancements.css" data-kit-enhancement-style>
 </head>
 <body>
+<div class="template-toolbar" role="toolbar" aria-label="Document tools">
 <a class="btn-back" href="../index.html">← Template Library</a>
 <button class="btn-download" onclick="window.print()">Save as PDF</button>
 <button class="btn-save" onclick="saveEdits()">Save Edits ↓</button>
 <button class="btn-theme">&#9788; Light</button>
+<button class="btn-extra" id="logo-button" type="button">Add logo</button>
+<button class="btn-extra" id="add-section-button" type="button">+ Section</button>
+<button class="btn-extra" id="png-button" type="button">Save as PNG</button>
+</div>
+<input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden>
 <div class="document">
 
   <header class="doc-header">
     <div>
+      <img class="company-logo" alt="Company logo" hidden>
       <div class="logo-block">[YOUR BUSINESS NAME]<span>.</span></div>
       <div class="logo-sub">[YOUR SERVICE / NICHE]</div>
     </div>
@@ -362,5 +370,7 @@
     });
   })();
 </script>
+<script src="../vendor/html2canvas.min.js" data-kit-capture></script>
+<script src="enhancements.js" data-kit-enhancement></script>
 </body>
 </html>

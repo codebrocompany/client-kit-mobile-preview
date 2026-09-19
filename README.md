@@ -10,6 +10,8 @@ pages are not represented as copies of those paid originals.
 - `index.html` — library with working links to all 14 templates; no purchase button.
 - `templates/client-agreement.html` — supplied agreement, with promotional text removed.
 - `templates/invoice.html` — supplied invoice, with promotional text removed.
+- `templates/enhancements.js`, `templates/enhancements.css` — shared original-form editor controls.
+- `vendor/html2canvas.min.js` — bundled MIT-licensed PNG exporter.
 - `complete/*.html` — 12 new self-contained editable documents, one file each.
 - `complete/editor.html`, `complete/app.js`, `complete/style.css` — source files
   used to generate those 12 documents.
@@ -19,15 +21,16 @@ Use the public mobile-test preview at
 folder with a static HTTP server and open `index.html`. The 12 new documents
 are self-contained HTML. Direct `file://` opening was not verified in the
 available browser environment.
-Click text inside a document to edit. The custom templates support section
-removal and undo, light mode, Save Edits (a self-contained editable HTML copy),
-and Save as PDF. The library and all documents have a light-mode toggle; the
-choice is remembered in the same browser. Printing always uses a white page,
-regardless of the screen theme. In the new detailed invoice, line amounts, subtotal, tax,
-and total are directly editable. Quantity/rate and tax-rate changes also
-recalculate the dependent amounts; a later recalculation can replace a manual
-amount override. The supplied original invoice keeps its own original
-behavior, where amount text is editable but not auto-calculated.
+Tap a value to edit it. A bracketed field clears on focus. Supplied titles and
+labels stay fixed; use **+ Section** and **+ Field** to add your own content.
+There are no hidden delete crosses. **Add logo** accepts PNG, JPG, or WebP up
+to 1.5 MB; the logo is remembered in this browser across templates. **Save
+Edits** downloads editable HTML with the logo embedded. **Save as PDF** opens
+the browser print dialog; **Save as PNG** downloads a full-length image. PNG
+and print exports use a light paper background. The library and all documents
+also have a persistent light/dark screen theme. The detailed invoice calculates
+its line amounts and totals from quantity, rate, and tax rate; the supplied
+original invoice retains editable amount text without automatic calculation.
 
 For printing, choose A4 or US Letter and turn off the browser's "Print headers
 and footers" option. The original invoice can span two pages; its payment

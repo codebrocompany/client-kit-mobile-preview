@@ -1,0 +1,18 @@
+.template-toolbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 14px;background:#0a0a0a;border-bottom:1px solid var(--border-default)}
+.del-btn{display:none!important}
+.template-toolbar>*{position:static!important;inset:auto!important;z-index:auto!important;white-space:nowrap}
+.template-toolbar .btn-back{margin-right:auto}
+.template-toolbar button,.template-toolbar .btn-back{min-height:36px;padding:8px 11px;font-size:10px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em;border-radius:3px}
+.template-toolbar .btn-theme{border:1px solid var(--border-default)}
+.template-toolbar .btn-extra{background:transparent;color:var(--gold);border:1px solid var(--gold-dim);cursor:pointer;font-weight:700}
+.template-toolbar .btn-extra:hover{background:var(--gold-glow)}
+.document{margin-top:20px}
+.company-logo{display:block;max-width:180px;max-height:70px;width:auto;height:auto;object-fit:contain;margin-bottom:10px}
+.company-logo[hidden]{display:none!important}
+.add-field-button{display:inline-block;margin:12px 0 0;padding:6px 10px;background:transparent;border:1px solid var(--border-default);border-radius:2px;color:var(--gold);font-size:10px;font-weight:700;cursor:pointer}
+.add-field-button:hover{border-color:var(--gold)}
+.document [contenteditable="true"]:empty::before{content:attr(data-placeholder);color:var(--text-faint);font-style:italic}
+.document [contenteditable="true"]:focus:empty::before{content:""}
+html[data-theme="light"] .template-toolbar{background:#eef1f3}
+@media(max-width:820px){.template-toolbar{padding:8px 12px;gap:6px}.template-toolbar .btn-back{width:100%;margin-right:0}.template-toolbar>*{flex:1 0 auto}.template-toolbar .btn-back{flex:0 0 100%}.document{margin:16px auto 24px!important}.template-toolbar button{min-width:0}}
+@media print{.template-toolbar,.add-field-button,#logo-input{display:none!important}.document [contenteditable="true"]{outline:none!important}.document [contenteditable="true"]:empty::before{content:""}}
