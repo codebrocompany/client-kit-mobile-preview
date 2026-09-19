@@ -2,6 +2,20 @@
   const doc = document.querySelector('.document');
   if (!doc) return;
   const $ = (selector, root = document) => root.querySelector(selector);
+  const draftKey = 'codebro-client-draft-v2:' + (location.pathname.includes('invoice') ? 'invoice' : 'client-agreement');
+  function cleanHtml(html) {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    template.content.querySelectorAll('script,iframe,object,embed,form,link,meta').forEach(node => node.remove());
+    template.content.querySelectorAll('*').forEach(node => {
+      for (const attribute of [...node.attributes]) if (/^on/i.test(attribute.name) || /^(src|href)$/i.test(attribute.name) && /^(javascript:|data:text\/html)/i.test(attribute.value)) node.removeAttribute(attribute.name);
+    });
+    return template.innerHTML;
+  }
+  try {
+    const saved = JSON.parse(localStorage.getItem(draftKey) || 'null');
+    if (saved?.html) doc.innerHTML = cleanHtml(saved.html);
+  } catch (error) { console.warn('Could not restore draft', error); }
   const toast = message => {
     let bar = $('#kit-toast');
     if (!bar) {
@@ -277,7 +291,18 @@
     finally { button.disabled = false; button.textContent = 'Save as PNG'; }
   });
 
-  window.saveEdits = async function () {
+  window.saveEdits = function () {
+    try {
+      const clone = doc.cloneNode(true);
+      clone.querySelectorAll('.company-logo').forEach(node => node.removeAttribute('src'));
+      localStorage.setItem(draftKey, JSON.stringify({ html: cleanHtml(clone.innerHTML), savedAt: new Date().toISOString() }));
+      toast('Saved in this browser on this device.');
+    } catch (error) { console.error(error); toast('Could not save here. Storage may be full or disabled.'); }
+  };
+  $('#reset-button')?.addEventListener('click', () => {
+    if (confirm('Reset this document and delete its saved draft on this device?')) { localStorage.removeItem(draftKey); location.reload(); }
+  });
+  $('#download-button')?.addEventListener('click', async function () {
     try {
       const readText = async (selector, url) => {
         const node = $(selector);
@@ -315,5 +340,5 @@
       setTimeout(() => URL.revokeObjectURL(url), 30000);
       toast('Editable HTML downloaded.');
     } catch (error) { console.error(error); toast('Save failed. Please try again.'); }
-  };
+  });
 })();

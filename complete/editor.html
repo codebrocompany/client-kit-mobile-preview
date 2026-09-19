@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111110">
-  <title>Template Editor — Client Kit</title>
+  <title>Template Editor — Client Templates</title>
   <link rel="stylesheet" href="style.css">
   <script src="../vendor/html2canvas.min.js" data-kit-capture defer></script>
   <script src="app.js" defer></script>
@@ -12,11 +12,11 @@
 <body data-page="editor">
   <div class="editor-toolbar" role="toolbar" aria-label="Document tools">
     <a class="back-link" href="../index.html">← <span>Template Library</span></a>
-    <div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="reset-button" class="tool-button muted-button" type="button">Reset</button><button id="theme-button" class="tool-button muted-button" type="button" aria-pressed="false">Light mode</button><button id="save-button" class="tool-button" type="button">Save Edits ↓</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="png-button" class="tool-button primary-button" type="button">Save as PNG</button></div>
+    <div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="reset-button" class="tool-button muted-button" type="button">Reset</button><button id="theme-button" class="tool-button muted-button" type="button" aria-pressed="false">Light mode</button><button id="save-button" class="tool-button" type="button">Save Edits</button><button id="download-button" class="tool-button" type="button">Download HTML</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="png-button" class="tool-button primary-button" type="button">Save as PNG</button></div>
   </div>
   <input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden aria-label="Choose company logo">
   <main class="editor-shell">
-    <div class="editor-intro"><p class="eyebrow gold">THE CLIENT KIT</p><p>Tap any text to edit. Each red × removes its whole field, row, or section; Undo restores it.</p></div>
+    <div class="editor-intro"><p class="eyebrow gold">CLIENT TEMPLATES</p><p>Tap any text to edit. Save Edits keeps this draft on this browser/device; Download HTML makes a backup.</p></div>
     <article id="document" class="document" aria-live="polite"></article>
     <p class="editor-note">Template content is a starting point. Review every detail before sharing with a client. Agreements should be reviewed by a qualified professional for your use case.</p>
   </main>

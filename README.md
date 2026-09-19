@@ -1,9 +1,9 @@
-# Editable Client Kit
+# Editable Client Templates
 
-This package has 14 accessible templates: the 2 supplied STJ reference pages from
-the supplied ZIP, plus 12 independently created editable alternatives. The
-12 paid STJ source files were not included in the supplied ZIP, so the new
-pages are not represented as copies of those paid originals.
+This package has 14 accessible templates: 2 adapted pages from the supplied
+source ZIP, plus 12 independently created editable alternatives. The other 12
+original source files were not supplied, so these pages are not represented as
+copies of unavailable originals.
 
 ## Files
 
@@ -27,7 +27,11 @@ The red **×** removes one complete field pair, row, text block, or section;
 the layout reflows immediately. **Undo** restores the last removal.
 **Add logo** accepts PNG, JPG, or WebP up
 to 1.5 MB; the logo is remembered in this browser across templates. **Save
-Edits** downloads editable HTML with the logo embedded. **Save as PDF** opens
+Edits** saves the current document in this browser on this device. Reopening
+the page in the same browser restores it. **Reset** deletes that saved draft.
+This does not sync to other browsers or devices, and browser storage can be
+cleared by the user. **Download HTML** creates a portable editable backup with
+the logo embedded. **Save as PDF** opens
 the browser print dialog; **Save as PNG** downloads a full-length image. PNG
 and print exports use a light paper background and hide editing controls. The library and all documents
 also have a persistent light/dark screen theme. The detailed invoice calculates

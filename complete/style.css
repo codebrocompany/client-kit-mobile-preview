@@ -34,3 +34,17 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .doc-table th:last-child:not(.row-action){width:auto;text-align:left}
 .total-row{position:relative;padding-right:34px}.total-row .unit-remove{top:10px}
 @media print{.unit-remove,.doc-table .row-action{display:none!important}.doc-section>h2,.field,.doc-section .text-unit,.doc-description,.brand-text-unit,.footer-unit,.doc-label,.total-row{padding-right:0!important}}
+
+/* Give table cells intrinsic room; only the table scrolls on narrow screens. */
+.table-scroll{max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.doc-table{table-layout:auto;min-width:610px}
+.doc-table th,.doc-table td{overflow-wrap:normal;word-break:normal}
+.doc-table .editable{min-width:0;overflow-wrap:normal;word-break:normal}
+.document[data-template="package-menu"] .doc-table{min-width:690px;table-layout:fixed}
+.document[data-template="package-menu"] .doc-table th:nth-child(1){width:34px}
+.document[data-template="package-menu"] .doc-table th:nth-child(2){width:115px}
+.document[data-template="package-menu"] .doc-table th:nth-child(3){width:155px}
+.document[data-template="package-menu"] .doc-table th:nth-child(4){width:235px}
+.document[data-template="package-menu"] .doc-table th:nth-child(5){width:150px}
+.document[data-template="package-menu"] .doc-table td:nth-child(5) .editable{white-space:nowrap}
+@media print{.doc-table{min-width:0!important;width:100%!important;table-layout:auto!important}.doc-table .editable{white-space:normal!important}.table-scroll{overflow:visible!important}}

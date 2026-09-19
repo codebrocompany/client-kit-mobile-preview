@@ -135,7 +135,9 @@
 <a class="btn-back" href="../index.html">← Template Library</a>
 <button class="btn-extra" id="undo-button" type="button">Undo</button>
 <button class="btn-download" onclick="window.print()">Save as PDF</button>
-<button class="btn-save" onclick="saveEdits()">Save Edits ↓</button>
+<button class="btn-save" onclick="saveEdits()">Save Edits</button>
+<button class="btn-extra" id="download-button" type="button">Download HTML</button>
+<button class="btn-extra" id="reset-button" type="button">Reset</button>
 <button class="btn-theme">&#9788; Light</button>
 <button class="btn-extra" id="logo-button" type="button">Add logo</button>
 <button class="btn-extra" id="add-section-button" type="button">+ Section</button>
@@ -168,6 +170,10 @@
         <div class="field-value placeholder">[YOUR FULL NAME]</div>
         <div class="field-label">Business</div>
         <div class="field-value placeholder">[YOUR BUSINESS NAME]</div>
+        <div class="field-label">Business Address</div>
+        <div class="field-value placeholder">[YOUR ADDRESS]</div>
+        <div class="field-label">Tax ID / GSTIN (if applicable)</div>
+        <div class="field-value placeholder">[YOUR TAX ID]</div>
         <div class="field-label">Email</div>
         <div class="field-value placeholder">[YOUR EMAIL]</div>
         <div class="field-label">Phone</div>
@@ -179,6 +185,10 @@
         <div class="field-value placeholder">[CLIENT FULL NAME]</div>
         <div class="field-label">Business</div>
         <div class="field-value placeholder">[CLIENT BUSINESS NAME]</div>
+        <div class="field-label">Billing Address</div>
+        <div class="field-value placeholder">[CLIENT ADDRESS]</div>
+        <div class="field-label">Client Tax ID (if applicable)</div>
+        <div class="field-value placeholder">[CLIENT TAX ID]</div>
         <div class="field-label">Email</div>
         <div class="field-value placeholder">[CLIENT EMAIL]</div>
         <div class="field-label">Phone</div>
@@ -265,6 +275,24 @@
     </div>
   </div>
 
+  <div class="section">
+    <div class="section-heading">Tax &amp; Reference Details (if applicable)</div>
+    <div class="two-col">
+      <div>
+        <div class="field-label">Purchase Order / Project Reference</div>
+        <div class="field-value placeholder">[REFERENCE OR N/A]</div>
+        <div class="field-label">HSN / SAC Code</div>
+        <div class="field-value placeholder">[CODE OR N/A]</div>
+      </div>
+      <div>
+        <div class="field-label">Place of Supply</div>
+        <div class="field-value placeholder">[STATE / COUNTRY OR N/A]</div>
+        <div class="field-label">Tax Rate / Breakdown</div>
+        <div class="field-value placeholder">[REVIEW WITH ACCOUNTANT]</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Payment Instructions -->
   <div class="section payment-section">
     <div class="section-heading">Payment Instructions</div>
@@ -299,8 +327,8 @@
   </div>
 
   <footer class="doc-footer">
-    <div class="footer-brand">[YOUR BUSINESS NAME] — Confidential</div>
-    <div class="footer-page">The Client Kit · by STJ</div>
+    <div class="footer-brand">[YOUR BUSINESS NAME]</div>
+    <div class="footer-page">Prepared for [CLIENT NAME] · [DATE]</div>
   </footer>
 
 </div>

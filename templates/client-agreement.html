@@ -110,7 +110,9 @@
 <a class="btn-back" href="../index.html">← Template Library</a>
 <button class="btn-extra" id="undo-button" type="button">Undo</button>
 <button class="btn-download" onclick="window.print()">Save as PDF</button>
-<button class="btn-save" onclick="saveEdits()">Save Edits ↓</button>
+<button class="btn-save" onclick="saveEdits()">Save Edits</button>
+<button class="btn-extra" id="download-button" type="button">Download HTML</button>
+<button class="btn-extra" id="reset-button" type="button">Reset</button>
 <button class="btn-theme">&#9788; Light</button>
 <button class="btn-extra" id="logo-button" type="button">Add logo</button>
 <button class="btn-extra" id="add-section-button" type="button">+ Section</button>
@@ -146,6 +148,8 @@
         <div class="field-value placeholder">[YOUR BUSINESS NAME]</div>
         <div class="field-label">Email</div>
         <div class="field-value placeholder">[YOUR EMAIL]</div>
+        <div class="field-label">Provider Address</div>
+        <div class="field-value placeholder">[YOUR ADDRESS]</div>
       </div>
       <div>
         <div class="field-label">Client Name</div>
@@ -154,6 +158,8 @@
         <div class="field-value placeholder">[CLIENT BUSINESS NAME]</div>
         <div class="field-label">Email</div>
         <div class="field-value placeholder">[CLIENT EMAIL]</div>
+        <div class="field-label">Client Address</div>
+        <div class="field-value placeholder">[CLIENT ADDRESS]</div>
       </div>
     </div>
   </div>
@@ -235,6 +241,24 @@
     </ul>
   </div>
 
+  <div class="section">
+    <div class="section-heading">Additional Details to Confirm</div>
+    <div class="two-col">
+      <div>
+        <div class="field-label">Acceptance Criteria</div>
+        <div class="field-value placeholder">[DELIVERABLE APPROVAL PROCESS]</div>
+        <div class="field-label">Out of Scope / Change Requests</div>
+        <div class="field-value placeholder">[EXCLUSIONS AND APPROVAL METHOD]</div>
+      </div>
+      <div>
+        <div class="field-label">Governing Law / Jurisdiction</div>
+        <div class="field-value placeholder">[REVIEW WITH COUNSEL]</div>
+        <div class="field-label">Notices and Disputes</div>
+        <div class="field-value placeholder">[EMAIL / PROCESS]</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Signatures -->
   <div class="section-heading" style="margin-top:28px;">Signatures</div>
   <div class="body-text" style="margin-bottom:16px;">By signing below, both parties agree to the terms outlined in this agreement. This agreement becomes binding upon receipt of the deposit payment.</div>
@@ -264,8 +288,8 @@
   </div>
 
   <footer class="doc-footer">
-    <div class="footer-brand">[YOUR BUSINESS NAME] — Confidential</div>
-    <div class="footer-page">The Client Kit · by STJ</div>
+    <div class="footer-brand">[YOUR BUSINESS NAME]</div>
+    <div class="footer-page">Prepared for [CLIENT NAME] · [DATE]</div>
   </footer>
 
 </div>
