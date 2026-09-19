@@ -33,4 +33,6 @@ documents. The supplied original agreement and invoice remain separate from
   inspected. Direct `file://` opening was not testable in this browser.
 - The example contract clauses, tax figures, payment details, and business
   placeholders need professional/user review before client use.
-- No remote deployment or purchase was made. The preview is local only.
+- The public mobile-test preview is hosted at
+  `https://codebrocompany.github.io/client-kit-mobile-preview/`. No purchase
+  was made. Documents contain placeholders, not private client data.

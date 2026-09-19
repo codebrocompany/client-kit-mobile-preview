@@ -14,9 +14,11 @@ pages are not represented as copies of those paid originals.
 - `complete/editor.html`, `complete/app.js`, `complete/style.css` — source files
   used to generate those 12 documents.
 
-Serve this folder with a static HTTP server and open `index.html`. The 12 new
-documents are self-contained HTML. Direct `file://` opening was not verified
-in the available browser environment.
+Use the public mobile-test preview at
+`https://codebrocompany.github.io/client-kit-mobile-preview/`, or serve this
+folder with a static HTTP server and open `index.html`. The 12 new documents
+are self-contained HTML. Direct `file://` opening was not verified in the
+available browser environment.
 Click text inside a document to edit. The custom templates support section
 removal and undo, light mode, Save Edits (a self-contained editable HTML copy),
 and Save as PDF. In the new detailed invoice, line amounts, subtotal, tax,
