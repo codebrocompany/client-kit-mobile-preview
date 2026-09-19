@@ -16,6 +16,7 @@
     const saved = JSON.parse(localStorage.getItem(draftKey) || 'null');
     if (saved?.html) doc.innerHTML = cleanHtml(saved.html);
   } catch (error) { console.warn('Could not restore draft', error); }
+  doc.querySelectorAll('.selected-unit').forEach(node => node.classList.remove('selected-unit'));
   const toast = message => {
     let bar = $('#kit-toast');
     if (!bar) {
@@ -37,6 +38,13 @@
     node.spellcheck = false;
   });
   const removedItems = [];
+  let selectedUnit = null;
+  function selectUnit(unit) {
+    if (selectedUnit === unit) return;
+    selectedUnit?.classList.remove('selected-unit');
+    selectedUnit = unit;
+    selectedUnit?.classList.add('selected-unit');
+  }
   function cross(target, label, holder = target) {
     target.classList.add('removable-unit');
     const button = document.createElement('button');
@@ -125,14 +133,21 @@
   }
   doc.addEventListener('click', event => {
     const button = event.target.closest('.unit-remove');
-    if (!button) return;
-    event.stopPropagation();
+    if (!button) {
+      if (event.target.closest('.add-field-button')) return;
+      selectUnit(event.target.closest('.removable-unit'));
+      return;
+    }
     const unit = button.closest('.removable-unit');
     if (!unit) return;
+    selectUnit(null);
     removedItems.push({ node: unit, parent: unit.parentNode, next: unit.nextSibling });
     unit.remove();
     refreshLayout();
     toast('Removed. Tap Undo to restore.');
+  });
+  document.addEventListener('click', event => {
+    if (!doc.contains(event.target)) selectUnit(null);
   });
   $('#undo-button')?.addEventListener('click', undoRemoval);
   document.addEventListener('keydown', event => {
@@ -143,6 +158,7 @@
   refreshLayout();
   doc.addEventListener('focusin', event => {
     const node = event.target;
+    if (node.closest('.removable-unit')) selectUnit(node.closest('.removable-unit'));
     if (node.contentEditable !== 'true') return;
     const text = node.textContent.trim();
     if (node.children.length === 0 && /^\[[\s\S]+\]$/.test(text)) {
@@ -294,6 +310,7 @@
   window.saveEdits = function () {
     try {
       const clone = doc.cloneNode(true);
+      clone.querySelectorAll('.selected-unit').forEach(node => node.classList.remove('selected-unit'));
       clone.querySelectorAll('.company-logo').forEach(node => node.removeAttribute('src'));
       localStorage.setItem(draftKey, JSON.stringify({ html: cleanHtml(clone.innerHTML), savedAt: new Date().toISOString() }));
       toast('Saved in this browser on this device.');
@@ -315,6 +332,7 @@
       const capture = await readText('script[data-kit-capture]', '../vendor/html2canvas.min.js');
       const runtime = await readText('script[data-kit-enhancement]', 'enhancements.js');
       const clone = document.documentElement.cloneNode(true);
+      clone.querySelectorAll('.selected-unit').forEach(node => node.classList.remove('selected-unit'));
       clone.querySelectorAll('.del-btn,#kit-toast').forEach(node => node.remove());
       const style = document.createElement('style');
       style.dataset.kitEnhancementStyle = '';

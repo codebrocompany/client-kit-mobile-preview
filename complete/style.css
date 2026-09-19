@@ -19,6 +19,8 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .fields{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}
 .removable-unit{position:relative}
 .unit-remove{position:absolute;top:0;right:0;z-index:2;width:28px;height:28px;display:grid;place-items:center;background:#3e1717;border:1px solid #a84a4a;border-radius:4px;color:#ffb5b5;font-size:19px;font-weight:700;line-height:1;cursor:pointer}
+.unit-remove{visibility:hidden;opacity:0;pointer-events:none}
+.selected-unit>.unit-remove,.selected-unit>.row-action>.unit-remove{visibility:visible;opacity:1;pointer-events:auto}
 .unit-remove:hover,.unit-remove:focus-visible{background:#7a2525;color:#fff;border-color:#e36969}
 .doc-section>.unit-remove{top:17px}
 .doc-section>h2{padding-right:38px;min-height:28px}
