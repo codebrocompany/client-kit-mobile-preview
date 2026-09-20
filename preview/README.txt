@@ -1,0 +1,1 @@
+Public visual preview; only two free editors. No backend, secrets or premium template registry included.
