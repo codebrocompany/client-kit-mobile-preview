@@ -226,3 +226,22 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
   .document[data-template="invoice-full"] .doc-table th,
   .document[data-template="invoice-full"] .doc-table td{padding:3px 5px}
 }
+
+/* Optional image signatures and company stamps. Empty slots leave a line for pen signing. */
+.media-slot{min-width:0;margin:6px 0 4px}
+.media-preview{display:block;width:auto;max-width:150px;height:auto;max-height:58px;object-fit:contain;object-position:left bottom}
+.media-preview[hidden]{display:none!important}
+.media-stamp .media-preview{max-width:82px;max-height:72px}
+.media-actions{display:flex;flex-wrap:wrap;gap:6px}
+.media-actions button{border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--gold);font-size:10px;font-weight:650;padding:5px 7px}
+.media-actions button:hover{border-color:var(--gold)}
+.media-actions button[hidden]{display:none}
+.offer-signature-line{height:auto;min-height:30px}
+.offer-signature-line .media-slot{margin:2px 0}
+.signature-field.has-signature-image>.editable,.offer-signature-line.has-signature-image>.editable{display:none}
+@media print{
+  .media-actions,.media-slot:not(.has-image){display:none!important}
+  .signature-field>.editable.unfilled,.offer-signature-line>.editable.unfilled{visibility:hidden}
+  .media-slot.has-image{margin:3px 0;break-inside:avoid}
+  .offer-signature-box{break-inside:avoid}
+}

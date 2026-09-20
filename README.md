@@ -62,6 +62,16 @@ shared across the three offer pages. Existing offer drafts are kept, with
 missing logo/signature controls added when they reopen. The logo placeholder
 is excluded from PDF/PNG output until a real logo is uploaded.
 
+Signature areas now accept separate PNG, JPG, or WebP images up to 600 KB.
+The offer letter has candidate, employer, and HR signatures plus an optional
+employer stamp. Both client agreements provide provider/client signatures and
+an optional provider stamp. Both invoice formats include an optional
+authorization section with signature and stamp. The remaining HR letters
+offer image signatures and an optional company stamp where applicable.
+Signatures and stamps are embedded in Save Edits and downloaded HTML; PDF and
+PNG exports include uploaded images and hide upload controls. Without an
+uploaded signature, the printed line remains available for pen signing.
+
 Review all placeholders, prices, payment details, and legal wording before
 sending a document to a client. No client data is sent by the local templates.
 Employment letters must also be checked against actual HR/payroll records,

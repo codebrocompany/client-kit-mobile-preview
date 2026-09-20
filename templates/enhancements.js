@@ -3,6 +3,7 @@
   if (!doc) return;
   const $ = (selector, root = document) => root.querySelector(selector);
   const draftKey = 'codebro-client-draft-v2:' + (location.pathname.includes('invoice') ? 'invoice' : 'client-agreement');
+  let savedDraftVersion = 0;
   function cleanHtml(html) {
     const template = document.createElement('template');
     template.innerHTML = html;
@@ -15,8 +16,14 @@
   }
   try {
     const saved = JSON.parse(localStorage.getItem(draftKey) || 'null');
-    if (saved?.html) doc.innerHTML = cleanHtml(saved.html);
+    if (saved?.html) { doc.innerHTML = cleanHtml(saved.html); savedDraftVersion = saved.schemaVersion || 1; }
   } catch (error) { console.warn('Could not restore draft', error); }
+  if (location.pathname.includes('invoice') && savedDraftVersion < 2 && !doc.querySelector('.signature-grid')) {
+    const section = document.createElement('div');
+    section.className = 'section signature-section';
+    section.innerHTML = '<div class="section-heading">Authorization (optional)</div><div class="signature-grid"><div><div class="section-heading">Authorized Signatory</div><div class="signature-line"></div><div class="field-label">Signature</div><div class="field-label">Printed Name</div><div class="field-value placeholder">[NAME / TITLE]</div><div class="field-label">Date</div><div class="field-value placeholder">[DD Month YYYY]</div></div></div>';
+    doc.insertBefore(section, $('.doc-footer', doc));
+  }
   doc.querySelectorAll('.selected-unit').forEach(node => node.classList.remove('selected-unit'));
   const toast = message => {
     let bar = $('#kit-toast');
@@ -122,6 +129,30 @@
     wrapUnit(node, 'text-unit', node.textContent.trim().slice(0, 40) || 'text block');
   });
   doc.querySelectorAll('.notes-section > .field-value').forEach(node => wrapUnit(node, 'text-unit', 'notes'));
+  function mediaSlot(kind) {
+    const slot = document.createElement('div'), image = document.createElement('img'), controls = document.createElement('div');
+    slot.className = `media-slot media-${kind}`;slot.dataset.mediaKind = kind;
+    image.className = 'media-preview';image.alt = kind === 'stamp' ? 'Company stamp' : 'Signature';image.hidden = true;
+    controls.className = 'media-actions';
+    for (const [action, label] of [['media-upload', `Add ${kind}`], ['media-remove', 'Remove']]) {
+      const button = document.createElement('button');button.type = 'button';button.className = action;button.textContent = label;
+      if (action === 'media-remove') button.hidden = true;controls.append(button);
+    }
+    slot.append(image, controls);return slot;
+  }
+  function syncMediaSlot(slot) {
+    const filled = !!$('.media-preview', slot).getAttribute('src');
+    slot.classList.toggle('has-image', filled);$('.media-preview', slot).hidden = !filled;
+    $('.media-upload', slot).textContent = `${filled ? 'Change' : 'Add'} ${slot.dataset.mediaKind}`;
+    $('.media-remove', slot).hidden = !filled;
+  }
+  doc.querySelectorAll('.signature-grid > div').forEach((box, index) => {
+    const line = $('.signature-line', box);
+    if (!line) return;
+    if (!$('.media-signature', box)) line.append(mediaSlot('signature'));
+    if (index === 0 && !$('.media-stamp', box)) line.after(mediaSlot('stamp'));
+  });
+  doc.querySelectorAll('.media-slot').forEach(syncMediaSlot);
   function refreshLayout() {
     doc.querySelectorAll('.section-card,.callout').forEach(card => card.classList.toggle('is-empty', !card.querySelector('.field-pair')));
   }
@@ -141,6 +172,9 @@
     selection.addRange(range);
   }
   doc.addEventListener('click', event => {
+    const upload = event.target.closest('.media-upload'), removeMedia = event.target.closest('.media-remove');
+    if (upload) { activeMediaSlot = upload.closest('.media-slot');$('#media-input')?.click();return; }
+    if (removeMedia) { const slot = removeMedia.closest('.media-slot');$('.media-preview', slot).removeAttribute('src');syncMediaSlot(slot);toast('Image removed. Save Edits to keep this change.');return; }
     const button = event.target.closest('.unit-remove');
     if (!button) {
       if (event.target.closest('.add-field-button')) return;
@@ -306,6 +340,17 @@
     reader.readAsDataURL(file);
   });
 
+  let activeMediaSlot = null;
+  $('#media-input')?.addEventListener('change', event => {
+    const file = event.target.files?.[0], slot = activeMediaSlot;
+    event.target.value = '';activeMediaSlot = null;
+    if (!file || !slot?.isConnected) return;
+    if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type) || file.size > 600000) { toast('Use a PNG, JPG or WebP image under 600 KB.');return; }
+    const reader = new FileReader();
+    reader.onload = () => { if (!slot.isConnected) return;$('.media-preview', slot).src = reader.result;syncMediaSlot(slot);toast('Image added. Save Edits to keep it on this device.'); };
+    reader.readAsDataURL(file);
+  });
+
   $('#png-button')?.addEventListener('click', async () => {
     const button = $('#png-button');
     if (typeof html2canvas !== 'function') { toast('PNG tool did not load. Reload the page.'); return; }
@@ -317,7 +362,7 @@
         backgroundColor: '#ffffff', scale, useCORS: true, scrollY: -window.scrollY,
         onclone: copy => {
           copy.documentElement.setAttribute('data-theme', 'light');
-          copy.querySelectorAll('.add-field-button,.unit-remove,.row-action').forEach(node => node.remove());
+          copy.querySelectorAll('.add-field-button,.unit-remove,.row-action,.media-actions').forEach(node => node.remove());
           copy.querySelectorAll('[contenteditable]').forEach(node => { node.style.outline = 'none'; node.style.background = 'transparent'; });
         }
       });
@@ -341,7 +386,7 @@
       const clone = doc.cloneNode(true);
       clone.querySelectorAll('.selected-unit').forEach(node => node.classList.remove('selected-unit'));
       clone.querySelectorAll('.company-logo').forEach(node => node.removeAttribute('src'));
-      localStorage.setItem(draftKey, JSON.stringify({ html: cleanHtml(clone.innerHTML), savedAt: new Date().toISOString() }));
+      localStorage.setItem(draftKey, JSON.stringify({ html: cleanHtml(clone.innerHTML), savedAt: new Date().toISOString(), schemaVersion: location.pathname.includes('invoice') ? 2 : 1 }));
       toast('Saved in this browser on this device.');
     } catch (error) { console.error(error); toast('Could not save here. Storage may be full or disabled.'); }
   };

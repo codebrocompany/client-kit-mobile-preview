@@ -233,6 +233,25 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
   .document[data-template="invoice-full"] .doc-table th,
   .document[data-template="invoice-full"] .doc-table td{padding:3px 5px}
 }
+
+/* Optional image signatures and company stamps. Empty slots leave a line for pen signing. */
+.media-slot{min-width:0;margin:6px 0 4px}
+.media-preview{display:block;width:auto;max-width:150px;height:auto;max-height:58px;object-fit:contain;object-position:left bottom}
+.media-preview[hidden]{display:none!important}
+.media-stamp .media-preview{max-width:82px;max-height:72px}
+.media-actions{display:flex;flex-wrap:wrap;gap:6px}
+.media-actions button{border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--gold);font-size:10px;font-weight:650;padding:5px 7px}
+.media-actions button:hover{border-color:var(--gold)}
+.media-actions button[hidden]{display:none}
+.offer-signature-line{height:auto;min-height:30px}
+.offer-signature-line .media-slot{margin:2px 0}
+.signature-field.has-signature-image>.editable,.offer-signature-line.has-signature-image>.editable{display:none}
+@media print{
+  .media-actions,.media-slot:not(.has-image){display:none!important}
+  .signature-field>.editable.unfilled,.offer-signature-line>.editable.unfilled{visibility:hidden}
+  .media-slot.has-image{margin:3px 0;break-inside:avoid}
+  .offer-signature-box{break-inside:avoid}
+}
 </style>
 </head>
 <body data-page="editor" data-template="welcome-doc">
@@ -241,6 +260,7 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
     <div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="save-button" class="tool-button" type="button">Save Edits</button><button id="download-button" class="tool-button" type="button">Download HTML</button><button id="reset-button" class="tool-button muted-button" type="button">Reset</button><button id="theme-button" class="tool-button muted-button" type="button" aria-pressed="false">Light mode</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="png-button" class="tool-button" type="button">Save as PNG</button></div>
   </div>
   <input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden aria-label="Choose company logo">
+  <input id="media-input" type="file" accept="image/png,image/jpeg,image/webp" hidden aria-label="Choose signature or stamp image">
   <main class="editor-shell">
     <div class="editor-intro"><p class="eyebrow gold">CLIENT TEMPLATES</p><p>Tap any text to edit or select a field to reveal its ×. Tap outside to hide it. Save Edits keeps this draft on this browser/device; Download HTML makes a backup.</p></div>
     <article id="document" class="document" aria-live="polite"></article>
@@ -402,6 +422,7 @@ function invoiceSections(full){
     {title:"Notes",paragraphs:["Thank you for your business. Please include the invoice number with your payment. For questions about this invoice, contact [EMAIL]."]}
   ];
   if(full) result.splice(5,0,{title:"Milestone & tax details",fields:[["Milestone","[MILESTONE NAME]"],["Purchase order","[PO NUMBER OR N/A]"],["Place of supply (if applicable)","[STATE / COUNTRY]"],["HSN / SAC code (if applicable)","[CODE]"],["Tax category / rate","[REVIEW WITH ACCOUNTANT]"],["Discount / adjustment","[AMOUNT OR N/A]"],["Tax treatment","[REVIEW WITH ACCOUNTANT]"]]});
+  result.push({title:"Authorization (optional)",fields:[["Authorized signatory","[NAME / TITLE]"],["Signature","[SIGNATURE]"],["Date","[DATE]"]]});
   return result;
 }
 
@@ -535,19 +556,50 @@ function renderEditor(){
   const foot=el("footer","doc-footer"),footLeft=el("div","footer-unit"),footRight=el("div","footer-unit");footLeft.append(editable("[YOUR BUSINESS NAME]"));footRight.append(editable(isHr?"Issued for [EMPLOYEE NAME] · [DATE]":"Prepared for [CLIENT NAME] · [DATE]"));foot.append(removable(footLeft,"footer business line"),removable(footRight,"footer client line"));root.append(foot);restoreDraft(root,id);normalizeGenericHeader(root);wireEditor();
 }
 const draftKey=id=>`codebro-client-draft-${id==="offer-letter"?"v3":"v2"}:${id}`;
-const draftSchemaVersion=id=>id==="offer-letter"?4:1;
+const draftSchemaVersion=id=>id==="offer-letter"?4:id==="invoice-full"?2:1;
 function cleanDraftHtml(html){const template=document.createElement("template");template.innerHTML=html;template.content.querySelectorAll("script,iframe,object,embed,form,link,meta").forEach(node=>node.remove());template.content.querySelectorAll(".selected-unit,.placeholder-pending").forEach(node=>node.classList.remove("selected-unit","placeholder-pending"));template.content.querySelectorAll("*").forEach(node=>{for(const attribute of [...node.attributes])if(/^on/i.test(attribute.name)||/^(src|href)$/i.test(attribute.name)&&/^(javascript:|data:text\/html)/i.test(attribute.value))node.removeAttribute(attribute.name)});return template.innerHTML}
 function restoreDraft(root,id){try{const saved=JSON.parse(localStorage.getItem(draftKey(id))||"null");if(saved?.html){root.innerHTML=cleanDraftHtml(saved.html);if(id==="offer-letter"&&root.classList.contains("offer-document")){
       root.querySelectorAll(".offer-letter-brand").forEach(brand=>{if(brand.querySelector(".offer-logo-placeholder"))return;const button=el("button","offer-logo-placeholder","Add company logo");button.type="button";button.setAttribute("aria-label","Add or change company logo");button.title="Click to upload your company logo";brand.querySelector(".company-logo")?.after(button)});
       root.querySelectorAll(".offer-page-footer").forEach(foot=>{for(const node of [...foot.childNodes])if(node.nodeType===3&&node.textContent.includes("|")){node.replaceWith(document.createTextNode("  "),editable("|"),document.createTextNode("  "))}});
       root.querySelectorAll(".offer-signature-line").forEach(line=>{if(!line.querySelector(".editable"))line.append(editable("[SIGNATURE]"))});
     }
-    if(id==="offer-letter"&&(saved.schemaVersion||1)<2){const before=[...root.querySelectorAll(".doc-section")].find(node=>$("h2 .editable",node)?.textContent.trim()==="Conditions before joining")||$(".doc-footer",root);for(const title of ["Standard workplace rules","Policies, changes & separation"]){const exists=[...root.querySelectorAll(".doc-section h2 .editable")].some(node=>node.textContent.trim()===title);if(!exists){const section=makeSection(details[id].sections.find(item=>item.title===title));root.insertBefore(section,before)}}toast("Saved draft restored with new rules. Save Edits to keep them.")}else toast("Saved draft restored on this device.")}}catch(error){console.warn("Could not restore draft",error)}}
+    if(id==="offer-letter"&&(saved.schemaVersion||1)<2){const before=[...root.querySelectorAll(".doc-section")].find(node=>$("h2 .editable",node)?.textContent.trim()==="Conditions before joining")||$(".doc-footer",root);for(const title of ["Standard workplace rules","Policies, changes & separation"]){const exists=[...root.querySelectorAll(".doc-section h2 .editable")].some(node=>node.textContent.trim()===title);if(!exists){const section=makeSection(details[id].sections.find(item=>item.title===title));root.insertBefore(section,before)}}toast("Saved draft restored with new rules. Save Edits to keep them.")}
+    else if(id==="invoice-full"&&(saved.schemaVersion||1)<2){const title="Authorization (optional)",exists=[...root.querySelectorAll(".doc-section h2 .editable")].some(node=>node.textContent.trim()===title);if(!exists)root.insertBefore(makeSection(details[id].sections.find(item=>item.title===title)),$(".doc-footer",root));toast("Saved invoice restored with optional signature and stamp. Save Edits to keep them.")}
+    else toast("Saved draft restored on this device.")}}catch(error){console.warn("Could not restore draft",error)}}
+function mediaSlot(kind){
+  const slot=el("div",`media-slot media-${kind}`),preview=el("img","media-preview");
+  slot.dataset.mediaKind=kind;preview.alt=kind==="stamp"?"Company stamp":"Signature";preview.hidden=true;
+  const actions=el("div","media-actions"),upload=el("button","media-upload",kind==="stamp"?"Add stamp":"Add signature"),remove=el("button","media-remove","Remove");
+  upload.type=remove.type="button";remove.hidden=true;actions.append(upload,remove);slot.append(preview,actions);return slot;
+}
+function syncMediaSlot(slot){
+  const present=!!$(".media-preview",slot)?.getAttribute("src");
+  slot.classList.toggle("has-image",present);$(".media-preview",slot).hidden=!present;
+  $(".media-upload",slot).textContent=`${present?"Change":"Add"} ${slot.dataset.mediaKind}`;
+  $(".media-remove",slot).hidden=!present;
+  if(slot.dataset.mediaKind==="signature")slot.closest(".signature-field,.offer-signature-line")?.classList.toggle("has-signature-image",present);
+}
+function ensureMediaSlots(root){
+  for(const field of root.querySelectorAll(".field")){
+    const label=$("label",field)?.textContent.trim()||"";
+    if(!/signature/i.test(label))continue;
+    field.classList.add("signature-field");
+    if(!$(".media-signature",field))field.insertBefore(mediaSlot("signature"),field.querySelector(":scope > .unit-remove"));
+    if(/provider signature|employer signature|signature and stamp|^signature$/i.test(label)&&!$(".media-stamp",field))field.insertBefore(mediaSlot("stamp"),field.querySelector(":scope > .unit-remove"));
+  }
+  root.querySelectorAll(".offer-signature-box").forEach((box,index)=>{
+    const line=$(".offer-signature-line",box);if(!line)return;
+    if(!$(".media-signature",line))line.append(mediaSlot("signature"));
+    if(index===1&&!$(".media-stamp",box))line.after(mediaSlot("stamp"));
+  });
+  root.querySelectorAll(".media-slot").forEach(syncMediaSlot);
+}
 function saveDraft(id){try{const clone=$("#document").cloneNode(true);clone.querySelectorAll(".company-logo").forEach(node=>node.removeAttribute("src"));localStorage.setItem(draftKey(id),JSON.stringify({html:cleanDraftHtml(clone.innerHTML),savedAt:new Date().toISOString(),schemaVersion:draftSchemaVersion(id)}));toast("Saved in this browser on this device.")}catch(error){console.error(error);toast("Could not save here. Storage may be full or disabled.")}}
 const removedItems=[];
 function undoRemoval(){const last=removedItems.pop();if(!last){toast("Nothing to restore.");return}last.parent.insertBefore(last.node,last.next?.parentNode===last.parent?last.next:null);updateTotalsFromAmounts();toast("Restored.")}
 function wireEditor(){
   const root=$("#document"),id=root.dataset.template;
+  ensureMediaSlots(root);
   let selectedUnit=null;
   root.querySelectorAll(".editable[data-placeholder]").forEach(field=>field.classList.toggle("unfilled",field.textContent.trim()===field.dataset.placeholder));
   root.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
@@ -586,6 +638,9 @@ function wireEditor(){
   root.addEventListener("input",event=>{const target=event.target;target.classList?.remove("placeholder-pending");if(target.matches?.(".editable[data-placeholder]"))target.classList.toggle("unfilled",target.textContent.trim()===target.dataset.placeholder);if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
   root.addEventListener("click",event=>{
     const remove=event.target.closest(".unit-remove"),add=event.target.closest(".add-row"),addField=event.target.closest(".add-field-button");
+    const mediaUpload=event.target.closest(".media-upload"),mediaRemove=event.target.closest(".media-remove");
+    if(mediaUpload){activeMediaSlot=mediaUpload.closest(".media-slot");$("#media-input")?.click();return}
+    if(mediaRemove){const slot=mediaRemove.closest(".media-slot");$(".media-preview",slot).removeAttribute("src");syncMediaSlot(slot);toast("Image removed. Save Edits to keep this change.");return}
     if(event.target.closest(".offer-logo-placeholder")){selectUnit(null);$("#logo-input")?.click();return}
     if(remove){
       const unit=remove.closest(".removable-unit");if(!unit)return;
@@ -613,11 +668,19 @@ function wireEditor(){
   });
   $("#theme-button")?.addEventListener("click",()=>{document.body.classList.toggle("light");const light=document.body.classList.contains("light");$("#theme-button").textContent=light?"Dark mode":"Light mode";$("#theme-button").setAttribute("aria-pressed",String(light));try{localStorage.setItem("client-kit-theme-v2",light?"light":"dark")}catch(error){}});
   $("#logo-button")?.addEventListener("click",()=>$("#logo-input")?.click());$("#logo-input")?.addEventListener("change",uploadLogo);restoreLogo();
+  $("#media-input")?.addEventListener("change",uploadMedia);
   $("#pdf-button")?.addEventListener("click",()=>window.print());$("#png-button")?.addEventListener("click",exportPng);$("#reset-button")?.addEventListener("click",()=>{if(confirm("Reset this document and delete its saved draft on this device?")){localStorage.removeItem(draftKey(id));location.reload()}});$("#save-button")?.addEventListener("click",()=>saveDraft(id));$("#download-button")?.addEventListener("click",()=>saveStandalone(document.title.replace(" — Client Templates",""),id));}
 function showRemoveLogo(){let button=$("#remove-logo-button");if(!button){button=el("button","tool-button muted-button","Remove logo");button.id="remove-logo-button";button.type="button";$("#logo-button").after(button)}button.onclick=()=>{document.querySelectorAll(".company-logo").forEach(logo=>{logo.removeAttribute("src");logo.hidden=true});document.querySelectorAll(".offer-logo-placeholder").forEach(node=>node.hidden=false);$("#logo-button").textContent="Add logo";button.remove();try{localStorage.removeItem("client-kit-logo")}catch(error){}toast("Logo removed.")}}
 function restoreLogo(){const logos=[...document.querySelectorAll(".company-logo")];if(!logos.length)return;let source=logos.find(logo=>logo.getAttribute("src"))?.getAttribute("src");if(!source){try{source=localStorage.getItem("client-kit-logo")}catch(error){}}if(source){logos.forEach(logo=>{logo.src=source;logo.hidden=false});document.querySelectorAll(".offer-logo-placeholder").forEach(node=>node.hidden=true);$("#logo-button").textContent="Change logo";showRemoveLogo()}}
 function uploadLogo(event){const file=event.target.files?.[0];if(!file)return;if(!["image/png","image/jpeg","image/webp"].includes(file.type)||file.size>1500000){toast("Use a PNG, JPG or WebP logo under 1.5 MB.");return}const reader=new FileReader();reader.onload=()=>{document.querySelectorAll(".company-logo").forEach(logo=>{logo.src=reader.result;logo.hidden=false});document.querySelectorAll(".offer-logo-placeholder").forEach(node=>node.hidden=true);$("#logo-button").textContent="Change logo";showRemoveLogo();try{localStorage.setItem("client-kit-logo",reader.result)}catch(error){toast("Logo added here, but browser storage is full.");return}toast("Logo added to your templates.")};reader.readAsDataURL(file)}
-async function exportPng(){const button=$("#png-button"),root=$("#document");if(typeof html2canvas!=="function"){toast("PNG tool did not load. Please reload the page.");return}button.disabled=true;button.textContent="Preparing PNG…";try{const width=root.scrollWidth,height=root.scrollHeight,scale=Math.min(2,Math.sqrt(14000000/(width*height)));const canvas=await html2canvas(root,{backgroundColor:"#ffffff",scale,useCORS:true,scrollX:0,scrollY:-window.scrollY,onclone:doc=>{doc.body.classList.add("light");doc.querySelectorAll(".add-row,.add-field-button,.unit-remove,.row-action,.offer-logo-placeholder").forEach(node=>node.remove());doc.querySelectorAll(".editable").forEach(node=>{node.style.borderBottom="0";node.style.background="transparent"})}});const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!blob)throw Error("Canvas export failed");const url=URL.createObjectURL(blob),link=el("a");link.href=url;link.download=`client-kit-${root.dataset.template||"document"}.png`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);toast("PNG downloaded.")}catch(error){console.error(error);toast("PNG export failed. Try PDF or a smaller logo.")}finally{button.disabled=false;button.textContent="Save as PNG"}}
+let activeMediaSlot=null;
+function uploadMedia(event){
+  const file=event.target.files?.[0],slot=activeMediaSlot;event.target.value="";activeMediaSlot=null;
+  if(!file||!slot?.isConnected)return;
+  if(!["image/png","image/jpeg","image/webp"].includes(file.type)||file.size>600000){toast("Use a PNG, JPG or WebP image under 600 KB.");return}
+  const reader=new FileReader();reader.onload=()=>{if(!slot.isConnected)return;$(".media-preview",slot).src=reader.result;syncMediaSlot(slot);toast("Image added. Save Edits to keep it on this device.")};reader.readAsDataURL(file);
+}
+async function exportPng(){const button=$("#png-button"),root=$("#document");if(typeof html2canvas!=="function"){toast("PNG tool did not load. Please reload the page.");return}button.disabled=true;button.textContent="Preparing PNG…";try{const width=root.scrollWidth,height=root.scrollHeight,scale=Math.min(2,Math.sqrt(14000000/(width*height)));const canvas=await html2canvas(root,{backgroundColor:"#ffffff",scale,useCORS:true,scrollX:0,scrollY:-window.scrollY,onclone:doc=>{doc.body.classList.add("light");doc.querySelectorAll(".add-row,.add-field-button,.unit-remove,.row-action,.offer-logo-placeholder,.media-actions").forEach(node=>node.remove());doc.querySelectorAll(".editable").forEach(node=>{node.style.borderBottom="0";node.style.background="transparent"})}});const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!blob)throw Error("Canvas export failed");const url=URL.createObjectURL(blob),link=el("a");link.href=url;link.download=`client-kit-${root.dataset.template||"document"}.png`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);toast("PNG downloaded.")}catch(error){console.error(error);toast("PNG export failed. Try PDF or a smaller logo.")}finally{button.disabled=false;button.textContent="Save as PNG"}}
 function toast(message){const bar=$("#toast");if(!bar)return;bar.textContent=message;bar.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>bar.classList.remove("show"),3200)}
 async function saveStandalone(name,id){try{
     const css=$("style[data-kit-style]")?.textContent||await fetch("style.css").then(r=>r.text());
@@ -626,7 +689,7 @@ async function saveStandalone(name,id){try{
     const clone=$("#document").cloneNode(true);
     clone.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
     const light=document.body.classList.contains("light")?" light":"";
-    const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(name)} — Client Templates</title><style data-kit-style>${css.replace(/<\/style/gi,"<\\/style")}</style></head><body data-page="standalone" class="${light.trim()}"><div class="editor-toolbar" role="toolbar" aria-label="Document tools"><span class="back-link">CLIENT TEMPLATES</span><div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="theme-button" class="tool-button muted-button" type="button">${light?"Dark mode":"Light mode"}</button><button id="save-button" class="tool-button" type="button">Save Edits</button><button id="download-button" class="tool-button" type="button">Download HTML</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="png-button" class="tool-button primary-button" type="button">Save as PNG</button></div></div><input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden><main class="editor-shell"><article id="document" class="${escapeHtml(clone.className)}" data-template="${escapeHtml(id)}">${clone.innerHTML}</article></main><div id="toast" class="toast" role="status" aria-live="polite"></div><script data-kit-capture>${capture.replace(/<\/script/gi,"<\\/script")}<\/script><script data-kit-runtime>${js.replace(/<\/script/gi,"<\\/script")}<\/script></body></html>`;
+    const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(name)} — Client Templates</title><style data-kit-style>${css.replace(/<\/style/gi,"<\\/style")}</style></head><body data-page="standalone" class="${light.trim()}"><div class="editor-toolbar" role="toolbar" aria-label="Document tools"><span class="back-link">CLIENT TEMPLATES</span><div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="theme-button" class="tool-button muted-button" type="button">${light?"Dark mode":"Light mode"}</button><button id="save-button" class="tool-button" type="button">Save Edits</button><button id="download-button" class="tool-button" type="button">Download HTML</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="png-button" class="tool-button primary-button" type="button">Save as PNG</button></div></div><input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden><input id="media-input" type="file" accept="image/png,image/jpeg,image/webp" hidden><main class="editor-shell"><article id="document" class="${escapeHtml(clone.className)}" data-template="${escapeHtml(id)}">${clone.innerHTML}</article></main><div id="toast" class="toast" role="status" aria-live="polite"></div><script data-kit-capture>${capture.replace(/<\/script/gi,"<\\/script")}<\/script><script data-kit-runtime>${js.replace(/<\/script/gi,"<\\/script")}<\/script></body></html>`;
     const offerFontStyle=id==="offer-letter"?$("style[data-kit-offer-font]")?.outerHTML||"":"";
     const bundledHtml=offerFontStyle?html.replace("</head>",`${offerFontStyle}</head>`):html;
     const url=URL.createObjectURL(new Blob([bundledHtml],{type:"text/html"})),link=el("a");link.href=url;link.download=`client-kit-${id}-edited.html`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);toast("Editable HTML downloaded.")
