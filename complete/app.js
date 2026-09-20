@@ -241,6 +241,15 @@ function renderOfferLetter(root){
   }catch(error){}
   restoreDraft(root,"offer-letter");wireEditor();
 }
+function normalizeGenericHeader(root){
+  const head=$(".doc-head",root);
+  if(!head)return;
+  let meta=$(".doc-head-meta",head);
+  if(!meta){meta=el("div","doc-head-meta");head.append(meta)}
+  const title=$(".title-unit",root),label=$(".doc-label",root);
+  if(title)meta.append(title);
+  if(label)meta.append(label);
+}
 function renderEditor(){
   const id=new URLSearchParams(location.search).get("template")||document.body.dataset.template||"welcome-doc",data=details[id],root=$("#document");
   if(!data){root.append(el("h1","","Template not found"),textBlock("Return to the library and choose a document."));return}
@@ -254,7 +263,7 @@ function renderEditor(){
   const title=el("h1","doc-title"),titleUnit=el("div","title-unit"),description=el("p","doc-description");title.append(editable(data.name));titleUnit.append(title);description.append(editable(data.description));
   root.append(head,removable(titleUnit,"document title"));if(!isHr)root.append(removable(description,"description"));
   for(const section of data.sections)root.append(makeSection(section));
-  const foot=el("footer","doc-footer"),footLeft=el("div","footer-unit"),footRight=el("div","footer-unit");footLeft.append(editable("[YOUR BUSINESS NAME]"));footRight.append(editable(isHr?"Issued for [EMPLOYEE NAME] · [DATE]":"Prepared for [CLIENT NAME] · [DATE]"));foot.append(removable(footLeft,"footer business line"),removable(footRight,"footer client line"));root.append(foot);restoreDraft(root,id);wireEditor();
+  const foot=el("footer","doc-footer"),footLeft=el("div","footer-unit"),footRight=el("div","footer-unit");footLeft.append(editable("[YOUR BUSINESS NAME]"));footRight.append(editable(isHr?"Issued for [EMPLOYEE NAME] · [DATE]":"Prepared for [CLIENT NAME] · [DATE]"));foot.append(removable(footLeft,"footer business line"),removable(footRight,"footer client line"));root.append(foot);restoreDraft(root,id);normalizeGenericHeader(root);wireEditor();
 }
 const draftKey=id=>`codebro-client-draft-${id==="offer-letter"?"v3":"v2"}:${id}`;
 const draftSchemaVersion=id=>id==="offer-letter"?4:1;
@@ -271,6 +280,7 @@ function undoRemoval(){const last=removedItems.pop();if(!last){toast("Nothing to
 function wireEditor(){
   const root=$("#document"),id=root.dataset.template;
   let selectedUnit=null;
+  root.querySelectorAll(".editable[data-placeholder]").forEach(field=>field.classList.toggle("unfilled",field.textContent.trim()===field.dataset.placeholder));
   root.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
   function selectPlaceholder(field){
     const selection=window.getSelection(),range=document.createRange();
@@ -298,13 +308,13 @@ function wireEditor(){
     if(value==null||!event.cancelable){selectPlaceholder(field);return}
     event.preventDefault();
     field.textContent=value;
-    field.classList.remove("placeholder-pending");
+    field.classList.remove("placeholder-pending","unfilled");
     const selection=window.getSelection(),range=document.createRange();
     range.selectNodeContents(field);range.collapse(false);
     selection?.removeAllRanges();selection?.addRange(range);
     field.dispatchEvent(new InputEvent("input",{bubbles:true,inputType:event.inputType,data:value}));
   });
-  root.addEventListener("input",event=>{const target=event.target;target.classList?.remove("placeholder-pending");if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
+  root.addEventListener("input",event=>{const target=event.target;target.classList?.remove("placeholder-pending");if(target.matches?.(".editable[data-placeholder]"))target.classList.toggle("unfilled",target.textContent.trim()===target.dataset.placeholder);if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
   root.addEventListener("click",event=>{
     const remove=event.target.closest(".unit-remove"),add=event.target.closest(".add-row"),addField=event.target.closest(".add-field-button");
     if(event.target.closest(".offer-logo-placeholder")){selectUnit(null);$("#logo-input")?.click();return}
