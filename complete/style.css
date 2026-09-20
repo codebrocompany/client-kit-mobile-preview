@@ -62,3 +62,36 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .offer-pay-meta{margin:4px 0 13px}.offer-pay-meta .offer-line{display:grid;grid-template-columns:42% 1fr;margin:0;border:1px solid #222;border-bottom:0;padding:3px 6px}.offer-pay-meta .offer-line:last-child{border-bottom:1px solid #222}.offer-pay-meta .offer-line strong{font-weight:400}.offer-table-scroll{max-width:100%;overflow-x:auto}.offer-pay-table{width:100%;border:1px solid #222;border-bottom:0}.offer-pay-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.78fr) minmax(0,.78fr);position:relative}.offer-pay-cell{min-width:0;padding:3px 6px;border-right:1px solid #222;border-bottom:1px solid #222;line-height:1.16}.offer-pay-cell:last-of-type{border-right:0;text-align:right}.offer-pay-cell:nth-of-type(2){text-align:right}.offer-pay-heading,.offer-pay-summary{font-weight:700}.offer-pay-row>.unit-remove{top:0;right:0;width:23px;height:23px}.offer-page .offer-pay-note{font-size:11px;margin:10px 0 0}.offer-signatures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}.offer-signature-box{min-width:0}.offer-signature-line{border-bottom:1px solid #333;height:16px;margin-bottom:7px}.offer-signature-box .offer-paragraph{font-size:10px;margin-bottom:4px}.offer-page:nth-of-type(3) .offer-block{margin-bottom:22px}.offer-page:nth-of-type(3) .offer-bullets li{margin-bottom:11px}
 @media(max-width:700px){.offer-page{min-height:0;padding:26px 22px 26px;margin-bottom:18px;font-size:12px}.offer-letterhead{min-height:55px}.offer-page p{font-size:12px}.offer-reference-row{gap:6px}.offer-page .offer-line{font-size:12px}.offer-page .offer-heading{font-size:12px}.offer-page h1.offer-heading{font-size:14px}.offer-pay-table{min-width:510px}.offer-pay-meta .offer-line{font-size:11px}.offer-signatures{grid-template-columns:1fr;gap:14px;margin-top:24px}.offer-signature-line{height:12px}.offer-page-footer{font-size:9px}}
 @media print{.document.offer-document{padding:0!important;border:0!important}.offer-page{width:100%;min-height:273mm;height:auto;overflow:visible;margin:0;padding:0;border:0;box-shadow:none;break-after:page;page-break-after:always;font-size:11pt}.offer-page:last-child{break-after:auto;page-break-after:auto}.offer-letterhead{min-height:20mm}.offer-page .editable{border-bottom:0!important;background:transparent!important;outline:0!important}.offer-page .add-field-button,.offer-page .unit-remove{display:none!important}.offer-page-footer{padding-top:3mm}.offer-table-scroll{overflow:visible!important}.offer-pay-table{min-width:0}.offer-page p,.offer-page .offer-line{font-size:10pt}.offer-page .offer-heading{font-size:11pt}.offer-page h1.offer-heading{font-size:12pt}.offer-page .offer-pay-cell{padding:1.1mm 1.5mm;font-size:9pt}.offer-page:nth-of-type(3) .offer-bullets li{margin-bottom:3mm}}
+
+/* Offer-letter typography follows the reference PDF. Cambria is used where
+   installed; freely licensed Caladea is the mobile/web fallback. */
+@font-face{font-family:OfferCaladea;src:url("fonts/Caladea-Regular.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:OfferCaladea;src:url("fonts/Caladea-Bold.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap}
+.document.offer-document{font-family:Cambria,OfferCaladea,Georgia,serif;font-size:11pt}
+.offer-page{padding-top:24px;line-height:1.38;font-size:11pt}
+.offer-letterhead{min-height:118px;margin-bottom:19px}
+.offer-letter-brand{min-height:104px}
+.offer-letter-brand .company-logo{max-height:78px;max-width:145px;margin:0 0 8px}
+.offer-logo-placeholder{display:flex;align-items:center;justify-content:center;width:118px;height:71px;margin:0 0 8px;border:1px dashed #a9a9a9;border-radius:2px;background:#fafafa;color:#555;font:600 10px/1.25 Arial,sans-serif;letter-spacing:.04em;text-align:center;cursor:pointer}
+.offer-logo-placeholder:hover,.offer-logo-placeholder:focus-visible{border-color:#555;background:#f0f0f0}
+.offer-logo-placeholder[hidden]{display:none!important}
+.offer-company-name{font:700 14px Cambria,OfferCaladea,Georgia,serif;letter-spacing:0}
+.offer-page p{margin-bottom:15px;font-size:11pt;line-height:1.38}
+.offer-page .offer-line{margin-bottom:17px;font-size:11pt;line-height:1.4}
+.offer-page .offer-salutation{margin:25px 0 19px}
+.offer-reference-row{margin-bottom:21px}
+.offer-recipient{margin-bottom:29px}
+.offer-recipient .offer-paragraph{margin:0;line-height:1.25}
+.offer-recipient .offer-paragraph:first-child{margin-bottom:17px}
+.offer-page .offer-block{margin-bottom:20px}
+.offer-page .offer-heading{font-size:12pt;margin:20px 0 15px}
+.offer-page .offer-block h2{font-size:12pt;margin-bottom:13px}
+.offer-bullets li{margin-bottom:8px;line-height:1.35}
+.offer-pay-table,.offer-pay-meta{font-family:"Times New Roman",Times,serif;font-size:10.5pt}
+.offer-pay-cell{line-height:1.22}
+.offer-page-footer{font-family:Lato,Arial,sans-serif;font-size:9pt}
+.offer-signature-line{height:26px}
+.offer-signature-line .editable{font-size:10pt}
+.offer-signature-box .offer-paragraph{font-size:10pt;margin-bottom:5px}
+@media(max-width:700px){.offer-page{padding-top:25px;font-size:11pt}.offer-letterhead{min-height:114px}.offer-page p,.offer-page .offer-line{font-size:11pt}.offer-logo-placeholder{height:68px}.offer-pay-table{font-size:10pt}.offer-page-footer{font-size:8pt}}
+@media print{.offer-page{padding-top:0;line-height:1.35;font-size:11pt}.offer-letterhead{min-height:31mm;margin-bottom:4mm}.offer-logo-placeholder{display:none!important}.offer-page p,.offer-page .offer-line{font-size:11pt;line-height:1.35}.offer-page .offer-line{margin-bottom:4mm}.offer-page .offer-heading,.offer-page .offer-block h2{font-size:12pt}.offer-page .offer-pay-cell{font-size:9.5pt;line-height:1.16}.offer-page-footer{font-size:9pt}}

@@ -53,6 +53,12 @@ remain editable and the salary table must be checked manually; it does not
 calculate compensation. A previous offer-letter draft, if present, remains
 on this device and can be opened with **Old draft**; the new format uses a
 separate draft slot so the older version is not silently overwritten.
+The offer letter alone uses Cambria where available and the OFL-licensed
+Caladea fallback for browsers without it; its compensation table uses Times
+New Roman when available. The logo upload is above the company name and is
+shared across the three offer pages. Existing offer drafts are kept, with
+missing logo/signature controls added when they reopen. The logo placeholder
+is excluded from PDF/PNG output until a real logo is uploaded.
 
 Review all placeholders, prices, payment details, and legal wording before
 sending a document to a client. No client data is sent by the local templates.
