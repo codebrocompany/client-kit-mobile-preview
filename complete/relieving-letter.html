@@ -57,6 +57,18 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .document[data-template="package-menu"] .doc-table th:nth-child(5){width:150px}
 .document[data-template="package-menu"] .doc-table td:nth-child(5) .editable{white-space:nowrap}
 @media print{.doc-table{min-width:0!important;width:100%!important;table-layout:auto!important}.doc-table .editable{white-space:normal!important}.table-scroll{overflow:visible!important}}
+
+/* The offer letter uses a three-sheet A4 letterhead rather than the generic card layout. */
+.document.offer-document{--paper-ink:#171717;--paper-sub:#555;--line:#bdbdbd;--gold:#252525;background:transparent;border:0;box-shadow:none;padding:0;min-height:0;font-family:Georgia,"Times New Roman",serif;color:#171717}
+.offer-page{display:flex;flex-direction:column;width:100%;min-height:1080px;margin:0 0 24px;padding:65px 76px 32px;background:#fff;border:1px solid #d6d6d6;box-shadow:0 16px 40px #0002;color:#171717;font-size:13px;line-height:1.25}
+.offer-letterhead{min-height:68px;margin-bottom:15px}.offer-letter-brand{min-height:57px}.offer-letter-brand .company-logo{max-height:62px;margin:0 0 3px}.offer-company-name{font:700 13px Arial,sans-serif;letter-spacing:.02em}.offer-letterhead-rule{height:1px;background:#181818;margin-top:8px}
+.offer-page-body{flex:1;min-width:0}.offer-page .editable{display:inline;min-height:0;padding:0;border:0;border-bottom:1px dashed #aaa;color:inherit;font:inherit;line-height:inherit;letter-spacing:inherit;text-transform:inherit;overflow-wrap:anywhere}.offer-page .editable:focus{background:#fff2ca;border-bottom-color:#a67518;outline:1px solid #ad8829}.offer-page .editable:empty::before{content:attr(data-placeholder)}
+.offer-page p{margin:0 0 10px;color:#171717;font-size:13px;line-height:1.3}.offer-page .offer-paragraph{position:relative;padding-right:30px}.offer-page .offer-line{position:relative;margin:0 0 12px;padding-right:30px}.offer-page .offer-line strong{font-weight:700}.offer-page .offer-salutation{margin:20px 0 14px}.offer-reference-row{display:flex;justify-content:space-between;gap:18px;margin:0 0 18px}.offer-reference-value{position:relative;min-width:0;padding-right:28px}.offer-reference-value:last-child{text-align:right}.offer-recipient{margin-bottom:20px}.offer-recipient .offer-paragraph{margin:0}.offer-recipient .offer-paragraph:first-child{margin-bottom:14px}
+.offer-page .offer-heading{position:relative;font-size:13px;font-weight:700;letter-spacing:0;text-align:left;color:#171717;margin:18px 0 13px;padding-right:30px}.offer-page h1.offer-heading{text-align:center;font-size:15px;margin:10px 0 34px}.offer-page .offer-block{border:0;padding:0;margin:0 0 12px}.offer-page .offer-block h2{font-size:13px;letter-spacing:0;color:#171717;margin:0 0 11px;min-height:0;padding-right:28px}.offer-page .offer-block>.unit-remove{top:0}.offer-page .offer-block .fields{margin:8px 0}.offer-page .offer-block .field{padding-right:30px}.offer-page .add-field-button{font-family:Arial,sans-serif;font-size:9px;padding:3px 7px;margin:3px 0 7px;color:#555;border-color:#d4d4d4}
+.offer-bullets{padding-left:36px;margin:9px 0 17px}.offer-bullets li{position:relative;margin:0 0 6px;padding-right:30px}.offer-page-footer{position:relative;margin-top:auto;padding:11px 28px 0 0;border-top:2px solid #111;font:10px/1.35 Arial,sans-serif;color:#333}.offer-page-footer .editable{font:inherit}
+.offer-pay-meta{margin:4px 0 13px}.offer-pay-meta .offer-line{display:grid;grid-template-columns:42% 1fr;margin:0;border:1px solid #222;border-bottom:0;padding:3px 6px}.offer-pay-meta .offer-line:last-child{border-bottom:1px solid #222}.offer-pay-meta .offer-line strong{font-weight:400}.offer-table-scroll{max-width:100%;overflow-x:auto}.offer-pay-table{width:100%;border:1px solid #222;border-bottom:0}.offer-pay-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.78fr) minmax(0,.78fr);position:relative}.offer-pay-cell{min-width:0;padding:3px 6px;border-right:1px solid #222;border-bottom:1px solid #222;line-height:1.16}.offer-pay-cell:last-of-type{border-right:0;text-align:right}.offer-pay-cell:nth-of-type(2){text-align:right}.offer-pay-heading,.offer-pay-summary{font-weight:700}.offer-pay-row>.unit-remove{top:0;right:0;width:23px;height:23px}.offer-page .offer-pay-note{font-size:11px;margin:10px 0 0}.offer-signatures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}.offer-signature-box{min-width:0}.offer-signature-line{border-bottom:1px solid #333;height:16px;margin-bottom:7px}.offer-signature-box .offer-paragraph{font-size:10px;margin-bottom:4px}.offer-page:nth-of-type(3) .offer-block{margin-bottom:22px}.offer-page:nth-of-type(3) .offer-bullets li{margin-bottom:11px}
+@media(max-width:700px){.offer-page{min-height:0;padding:26px 22px 26px;margin-bottom:18px;font-size:12px}.offer-letterhead{min-height:55px}.offer-page p{font-size:12px}.offer-reference-row{gap:6px}.offer-page .offer-line{font-size:12px}.offer-page .offer-heading{font-size:12px}.offer-page h1.offer-heading{font-size:14px}.offer-pay-table{min-width:510px}.offer-pay-meta .offer-line{font-size:11px}.offer-signatures{grid-template-columns:1fr;gap:14px;margin-top:24px}.offer-signature-line{height:12px}.offer-page-footer{font-size:9px}}
+@media print{.document.offer-document{padding:0!important;border:0!important}.offer-page{width:100%;min-height:273mm;height:auto;overflow:visible;margin:0;padding:0;border:0;box-shadow:none;break-after:page;page-break-after:always;font-size:11pt}.offer-page:last-child{break-after:auto;page-break-after:auto}.offer-letterhead{min-height:20mm}.offer-page .editable{border-bottom:0!important;background:transparent!important;outline:0!important}.offer-page .add-field-button,.offer-page .unit-remove{display:none!important}.offer-page-footer{padding-top:3mm}.offer-table-scroll{overflow:visible!important}.offer-pay-table{min-width:0}.offer-page p,.offer-page .offer-line{font-size:10pt}.offer-page .offer-heading{font-size:11pt}.offer-page h1.offer-heading{font-size:12pt}.offer-page .offer-pay-cell{padding:1.1mm 1.5mm;font-size:9pt}.offer-page:nth-of-type(3) .offer-bullets li{margin-bottom:3mm}}
 </style>
 </head>
 <body data-page="editor" data-template="relieving-letter">
@@ -252,10 +264,92 @@ function updateTotalsFromAmounts(){const table=$(".invoice-table");if(!table)ret
 function updateRowAmount(row){const qty=numberFromText($(".qty",row).textContent),rate=numberFromText($(".rate",row).textContent);$(".line-amount",row).textContent=(qty*rate).toFixed(2)}
 function updateTotals(){const table=$(".invoice-table");if(!table)return;for(const row of table.tBodies[0].rows)updateRowAmount(row);updateTotalsFromAmounts()}
 function renderLibrary(){const grid=$("#collection-grid");for(const [index,id] of collectionIds.entries()){const link=el("a","collection-item");link.href=`editor.html?template=${id}`;link.append(el("span","",String(index+1).padStart(2,"0")),document.createTextNode(details[id].name),el("span","","↗"));grid.append(link)}}
+function renderOfferLetter(root){
+  root.classList.add("offer-document");
+  const pages=[];
+  function page(number){
+    const sheet=el("section","offer-page"),head=el("header","offer-letterhead"),brand=el("div","offer-letter-brand"),logo=el("img","company-logo");
+    logo.alt="Company logo";logo.hidden=true;
+    const name=el("div","offer-company-name");name.append(editable("[COMPANY NAME]"));
+    brand.append(logo,removable(name,"company name"));
+    head.append(brand,el("div","offer-letterhead-rule"));
+    const body=el("div","offer-page-body"),foot=el("footer","offer-page-footer");
+    foot.append(editable("[COMPANY ADDRESS]"),document.createTextNode("  |  "),editable("[COMPANY WEBSITE]"));
+    sheet.append(head,body,removable(foot,"company footer"));root.append(sheet);pages.push(sheet);return body;
+  }
+  function line(label,value,className=""){
+    const p=el("p",`offer-line ${className}`.trim()),strong=el("strong");strong.append(editable(label));p.append(strong,document.createTextNode(" "),editable(value,"inline"));return removable(p,label);
+  }
+  function paragraph(text,className=""){
+    const p=el("p",`offer-paragraph ${className}`.trim());p.append(editable(text));return removable(p,"paragraph");
+  }
+  function heading(text,level="h2"){
+    const h=el(level,"offer-heading");h.append(editable(text));return removable(h,`${text} heading`);
+  }
+  function bullets(items){
+    const list=el("ul","offer-bullets");for(const item of items){const li=el("li");li.append(editable(item));list.append(removable(li,"bullet"))}return list;
+  }
+  function addFields(section){const button=el("button","add-field-button","+ Field");button.type="button";section.append(button)}
+  const first=page(1),reference=el("div","offer-reference-row");
+  reference.append(removable(el("div","offer-reference-value"),"reference"),removable(el("div","offer-reference-value"),"date"));
+  reference.children[0].prepend(editable("[OFFER REFERENCE]"));reference.children[1].prepend(editable("[DD-MM-YYYY]"));first.append(reference);
+  const recipient=el("div","offer-recipient");recipient.append(paragraph("To,"),paragraph("[CANDIDATE FULL NAME]"),paragraph("[CANDIDATE PHONE]"),paragraph("[CANDIDATE EMAIL]"),paragraph("[CANDIDATE ADDRESS]"));first.append(recipient);
+  first.append(paragraph("Dear [CANDIDATE NAME],","offer-salutation"),paragraph("With reference to your application and interviews, we are pleased to offer you employment on the following terms, subject to the conditions in this letter."));
+  const facts=el("section","doc-section offer-block");facts.append(line("Job title:","[JOB TITLE]"),line("Reporting relationship:","[MANAGER NAME / TITLE]"),line("Date of joining:","[DD Month YYYY]"),line("Work location:","[CITY / REMOTE / HYBRID]"),line("Hours of work:","[WORKING DAYS AND HOURS]. Additional work will follow the agreed terms, company policy, and applicable law."));addFields(facts);first.append(facts);
+  const checks=el("section","doc-section offer-block");checks.append(heading("Background verification"),paragraph("This offer is conditional on completion of the checks and documents specified below:"),bullets(["[QUALIFICATION / EDUCATION DOCUMENTS]","[PREVIOUS EMPLOYMENT DOCUMENTS, IF REQUIRED]","[IDENTITY AND RIGHT-TO-WORK DOCUMENTS THROUGH A SECURE CHANNEL]"]));addFields(checks);first.append(checks);
+  first.append(paragraph("If you agree to this offer, please sign and return a copy by [ACCEPTANCE DEADLINE]."),line("Salary:","Your remuneration and deductions are set out in Annexure A. Amounts and statutory treatment must be checked before issue."));
+
+  const second=page(2);second.append(heading("Annexure A","h1"));
+  const meta=el("div","offer-pay-meta");meta.append(line("Name:","[CANDIDATE FULL NAME]"),line("Designation:","[JOB TITLE]"));second.append(meta);
+  const scroller=el("div","offer-table-scroll"),table=el("div","offer-pay-table");
+  function payRow(cells,kind=""){
+    const row=el("div",`offer-pay-row ${kind}`.trim());
+    for(const cell of cells){const part=el("div","offer-pay-cell");part.append(editable(cell));row.append(part)}
+    return removable(row,`${cells[0]} compensation row`);
+  }
+  table.append(payRow(["EARNINGS","MONTHLY ([CURRENCY])","YEARLY ([CURRENCY])"],"offer-pay-heading"));
+  for(const row of [
+    ["Basic salary","[AMOUNT]","[AMOUNT]"],["House rent allowance, if applicable","[AMOUNT / N/A]","[AMOUNT / N/A]"],
+    ["Travel / other allowance","[AMOUNT / N/A]","[AMOUNT / N/A]"],["Special allowance","[AMOUNT / N/A]","[AMOUNT / N/A]"],
+    ["GROSS SALARY (A)","[AMOUNT]","[AMOUNT]"],["DEDUCTIONS","",""],
+    ["Employee provident fund, if applicable","[AMOUNT / N/A]","[AMOUNT / N/A]"],["Employee state insurance, if applicable","[AMOUNT / N/A]","[AMOUNT / N/A]"],
+    ["Professional tax / other statutory deduction","[AMOUNT / N/A]","[AMOUNT / N/A]"],["TOTAL DEDUCTIONS (B)","[AMOUNT]","[AMOUNT]"],
+    ["NET PAY BEFORE INCOME TAX (A - B)","[AMOUNT]","[AMOUNT]"],["Employer PF / statutory contribution, if applicable","[AMOUNT / N/A]","[AMOUNT / N/A]"],
+    ["Employer insurance / other contribution","[AMOUNT / N/A]","[AMOUNT / N/A]"],["TOTAL EMPLOYER CONTRIBUTIONS (C)","[AMOUNT]","[AMOUNT]"],
+    ["TOTAL FIXED CTC (A + C)","[AMOUNT]","[AMOUNT]"],["Variable pay, if applicable","[AMOUNT / N/A]","[AMOUNT / N/A]"],
+    ["TOTAL VARIABLE PAY (D)","[AMOUNT / N/A]","[AMOUNT / N/A]"],
+    ["TOTAL CTC (A + C + D)","[AMOUNT]","[AMOUNT]"]
+  ])table.append(payRow(row,/^(GROSS|TOTAL|NET PAY|DEDUCTIONS)/.test(row[0])?"offer-pay-summary":""));
+  scroller.append(table);second.append(scroller);
+  second.append(paragraph("Taxes, statutory contributions, benefits, and variable pay are subject to the applicable rules, eligibility, and the written compensation plan. Verify all totals before issuing this offer.","offer-pay-note"));
+  const signatures=el("div","offer-signatures");for(const [title,name,role] of [["Candidate acknowledgement","[CANDIDATE NAME]","[SIGNATURE / DATE]"],["For the employer","[AUTHORISED SIGNATORY]","[NAME / TITLE / DATE]"],["Human resources","[HR CONTACT]","[NAME / TITLE / DATE]"]]){const box=el("div","offer-signature-box");box.append(el("div","offer-signature-line"),paragraph(title),paragraph(name),paragraph(role));signatures.append(box)}second.append(signatures);
+
+  const third=page(3);third.append(heading("Employment - Terms & Conditions","h1"));
+  const terms=[
+    ["Leave / holidays",["Annual paid leave: [DAYS / POLICY].","Sick leave: [DAYS / POLICY].","Casual or other leave: [DAYS / POLICY].","Declared holidays and leave approval follow the applicable company policy and legal minimums."]],
+    ["Notice and separation",["Notice during probation: [PERIOD OR NOT APPLICABLE].","Notice after confirmation: [PERIOD OR POLICY]. Payment in lieu of notice, if permitted, follows the signed employment terms and applicable law.","Any conduct or performance matter will be handled under a fair, documented process and applicable policy; this template does not assume immediate dismissal without required process.","At separation, return company property and authorised copies of work records through the documented handover process. Final pay and statutory benefits will be calculated as required by law."]],
+    ["Company policies",["Workplace conduct, safety, confidentiality, data handling, benefits, working hours, and leave follow the policies identified to the employee. Policy changes will be communicated and will not override statutory rights or signed terms without the required process."]]
+  ];
+  for(const [title,items] of terms){const block=el("section","doc-section offer-block");block.append(heading(title),bullets(items));addFields(block);third.append(block)}
+  const law=el("section","doc-section offer-block");law.append(heading("Governing law / jurisdiction"),paragraph("Applicable law: [COUNTRY / STATE]. Dispute process or court jurisdiction: [REVIEWED LOCATION AND TERMS]. Please have this section reviewed for the actual place of employment."));addFields(law);third.append(law);
+  try {
+    const previous=localStorage.getItem("codebro-client-draft-v2:offer-letter");
+    if(previous){
+      const button=el("button","tool-button muted-button","Old draft");button.type="button";button.title="Open the previous offer-letter draft saved on this device";
+      $("#reset-button")?.before(button);
+      button.addEventListener("click",()=>{
+        if(button.dataset.open==="true"){location.reload();return}
+        try{const saved=JSON.parse(previous);if(!saved?.html)throw Error("No previous draft");root.innerHTML=cleanDraftHtml(saved.html);root.classList.remove("offer-document");button.textContent="New format";button.dataset.open="true";toast("Previous draft opened. Download HTML for a backup; New format reloads this page.")}catch(error){toast("Previous draft could not be opened.")}
+      });
+    }
+  }catch(error){}
+  restoreDraft(root,"offer-letter");wireEditor();
+}
 function renderEditor(){
   const id=new URLSearchParams(location.search).get("template")||document.body.dataset.template||"welcome-doc",data=details[id],root=$("#document");
   if(!data){root.append(el("h1","","Template not found"),textBlock("Return to the library and choose a document."));return}
   document.title=`${data.name} — Client Templates`;root.dataset.template=id;const isHr=data.category==="HR documents";
+  if(id==="offer-letter"){renderOfferLetter(root);return}
   if(isHr){const note=$(".editor-note");if(note)note.textContent="HR template: verify facts against personnel/payroll records and review applicable employment law, state rules, contracts, policies, process, notice and entitlements before issuing. Do not put sensitive IDs, bank details, or unsupported allegations in this browser draft on a shared device."}
   const head=el("header","doc-head"),brand=el("div","doc-brand"),logo=el("img","company-logo");logo.alt="Company logo";logo.hidden=true;
   const business=el("div","brand-text-unit"),niche=el("div","brand-text-unit");business.append(editable("[YOUR BUSINESS NAME]"));niche.append(editable(isHr?"[HR / PEOPLE OPERATIONS]":"[YOUR SERVICE / NICHE]"));
@@ -266,8 +360,8 @@ function renderEditor(){
   for(const section of data.sections)root.append(makeSection(section));
   const foot=el("footer","doc-footer"),footLeft=el("div","footer-unit"),footRight=el("div","footer-unit");footLeft.append(editable("[YOUR BUSINESS NAME]"));footRight.append(editable(isHr?"Issued for [EMPLOYEE NAME] · [DATE]":"Prepared for [CLIENT NAME] · [DATE]"));foot.append(removable(footLeft,"footer business line"),removable(footRight,"footer client line"));root.append(foot);restoreDraft(root,id);wireEditor();
 }
-const draftKey=id=>`codebro-client-draft-v2:${id}`;
-const draftSchemaVersion=id=>id==="offer-letter"?2:1;
+const draftKey=id=>`codebro-client-draft-${id==="offer-letter"?"v3":"v2"}:${id}`;
+const draftSchemaVersion=id=>id==="offer-letter"?3:1;
 function cleanDraftHtml(html){const template=document.createElement("template");template.innerHTML=html;template.content.querySelectorAll("script,iframe,object,embed,form,link,meta").forEach(node=>node.remove());template.content.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));template.content.querySelectorAll("*").forEach(node=>{for(const attribute of [...node.attributes])if(/^on/i.test(attribute.name)||/^(src|href)$/i.test(attribute.name)&&/^(javascript:|data:text\/html)/i.test(attribute.value))node.removeAttribute(attribute.name)});return template.innerHTML}
 function restoreDraft(root,id){try{const saved=JSON.parse(localStorage.getItem(draftKey(id))||"null");if(saved?.html){root.innerHTML=cleanDraftHtml(saved.html);if(id==="offer-letter"&&(saved.schemaVersion||1)<2){const before=[...root.querySelectorAll(".doc-section")].find(node=>$("h2 .editable",node)?.textContent.trim()==="Conditions before joining")||$(".doc-footer",root);for(const title of ["Standard workplace rules","Policies, changes & separation"]){const exists=[...root.querySelectorAll(".doc-section h2 .editable")].some(node=>node.textContent.trim()===title);if(!exists){const section=makeSection(details[id].sections.find(item=>item.title===title));root.insertBefore(section,before)}}toast("Saved draft restored with new rules. Save Edits to keep them.")}else toast("Saved draft restored on this device.")}}catch(error){console.warn("Could not restore draft",error)}}
 function saveDraft(id){try{const clone=$("#document").cloneNode(true);clone.querySelectorAll(".company-logo").forEach(node=>node.removeAttribute("src"));localStorage.setItem(draftKey(id),JSON.stringify({html:cleanDraftHtml(clone.innerHTML),savedAt:new Date().toISOString(),schemaVersion:draftSchemaVersion(id)}));toast("Saved in this browser on this device.")}catch(error){console.error(error);toast("Could not save here. Storage may be full or disabled.")}}
@@ -304,13 +398,23 @@ function wireEditor(){
   });
   document.addEventListener("click",event=>{if(!root.contains(event.target))selectUnit(null)});
   $("#undo-button")?.addEventListener("click",undoRemoval);document.addEventListener("keydown",event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="z"&&!event.target.closest?.("[contenteditable=true]")&&removedItems.length){event.preventDefault();undoRemoval()}});
-  $("#add-section-button")?.addEventListener("click",()=>{const section=makeSection({title:"[NEW SECTION]",fields:[["[FIELD LABEL]","[ENTER DETAILS]"]]},true);root.insertBefore(section,$(".doc-footer",root));$("h2 .editable",section).focus();section.scrollIntoView({block:"center"});toast("Section added.")});
+  $("#add-section-button")?.addEventListener("click",()=>{
+    const section=makeSection({title:"[NEW SECTION]",fields:[["[FIELD LABEL]","[ENTER DETAILS]"]]});
+    if(root.classList.contains("offer-document")){
+      section.classList.add("offer-block");
+      const sheet=el("section","offer-page"),head=$(".offer-letterhead",root)?.cloneNode(true),body=el("div","offer-page-body"),foot=$(".offer-page-footer",root)?.cloneNode(true);
+      head?.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
+      foot?.classList.remove("selected-unit");
+      body.append(section);sheet.append(head,body,foot);root.append(sheet);
+    }else root.insertBefore(section,$(".doc-footer",root));
+    $("h2 .editable",section).focus();section.scrollIntoView({block:"center"});toast("Section added.")
+  });
   $("#theme-button")?.addEventListener("click",()=>{document.body.classList.toggle("light");const light=document.body.classList.contains("light");$("#theme-button").textContent=light?"Dark mode":"Light mode";$("#theme-button").setAttribute("aria-pressed",String(light));try{localStorage.setItem("client-kit-theme",light?"light":"dark")}catch(error){}});
   $("#logo-button")?.addEventListener("click",()=>$("#logo-input")?.click());$("#logo-input")?.addEventListener("change",uploadLogo);restoreLogo();
   $("#pdf-button")?.addEventListener("click",()=>window.print());$("#png-button")?.addEventListener("click",exportPng);$("#reset-button")?.addEventListener("click",()=>{if(confirm("Reset this document and delete its saved draft on this device?")){localStorage.removeItem(draftKey(id));location.reload()}});$("#save-button")?.addEventListener("click",()=>saveDraft(id));$("#download-button")?.addEventListener("click",()=>saveStandalone(document.title.replace(" — Client Templates",""),id));}
-function showRemoveLogo(){let button=$("#remove-logo-button");if(!button){button=el("button","tool-button muted-button","Remove logo");button.id="remove-logo-button";button.type="button";$("#logo-button").after(button)}button.onclick=()=>{const logo=$(".company-logo");logo.removeAttribute("src");logo.hidden=true;$("#logo-button").textContent="Add logo";button.remove();try{localStorage.removeItem("client-kit-logo")}catch(error){}toast("Logo removed.")}}
-function restoreLogo(){const logo=$(".company-logo");if(!logo)return;if(logo.getAttribute("src")){logo.hidden=false;$("#logo-button").textContent="Change logo";showRemoveLogo();return}try{const saved=localStorage.getItem("client-kit-logo");if(saved){logo.src=saved;logo.hidden=false;$("#logo-button").textContent="Change logo";showRemoveLogo()}}catch(error){}}
-function uploadLogo(event){const file=event.target.files?.[0];if(!file)return;if(!["image/png","image/jpeg","image/webp"].includes(file.type)||file.size>1500000){toast("Use a PNG, JPG or WebP logo under 1.5 MB.");return}const reader=new FileReader();reader.onload=()=>{const logo=$(".company-logo");logo.src=reader.result;logo.hidden=false;$("#logo-button").textContent="Change logo";showRemoveLogo();try{localStorage.setItem("client-kit-logo",reader.result)}catch(error){toast("Logo added here, but browser storage is full.");return}toast("Logo added to your templates.")};reader.readAsDataURL(file)}
+function showRemoveLogo(){let button=$("#remove-logo-button");if(!button){button=el("button","tool-button muted-button","Remove logo");button.id="remove-logo-button";button.type="button";$("#logo-button").after(button)}button.onclick=()=>{document.querySelectorAll(".company-logo").forEach(logo=>{logo.removeAttribute("src");logo.hidden=true});$("#logo-button").textContent="Add logo";button.remove();try{localStorage.removeItem("client-kit-logo")}catch(error){}toast("Logo removed.")}}
+function restoreLogo(){const logos=[...document.querySelectorAll(".company-logo")];if(!logos.length)return;let source=logos.find(logo=>logo.getAttribute("src"))?.getAttribute("src");if(!source){try{source=localStorage.getItem("client-kit-logo")}catch(error){}}if(source){logos.forEach(logo=>{logo.src=source;logo.hidden=false});$("#logo-button").textContent="Change logo";showRemoveLogo()}}
+function uploadLogo(event){const file=event.target.files?.[0];if(!file)return;if(!["image/png","image/jpeg","image/webp"].includes(file.type)||file.size>1500000){toast("Use a PNG, JPG or WebP logo under 1.5 MB.");return}const reader=new FileReader();reader.onload=()=>{document.querySelectorAll(".company-logo").forEach(logo=>{logo.src=reader.result;logo.hidden=false});$("#logo-button").textContent="Change logo";showRemoveLogo();try{localStorage.setItem("client-kit-logo",reader.result)}catch(error){toast("Logo added here, but browser storage is full.");return}toast("Logo added to your templates.")};reader.readAsDataURL(file)}
 async function exportPng(){const button=$("#png-button"),root=$("#document");if(typeof html2canvas!=="function"){toast("PNG tool did not load. Please reload the page.");return}button.disabled=true;button.textContent="Preparing PNG…";try{const width=root.scrollWidth,height=root.scrollHeight,scale=Math.min(2,Math.sqrt(14000000/(width*height)));const canvas=await html2canvas(root,{backgroundColor:"#ffffff",scale,useCORS:true,scrollX:0,scrollY:-window.scrollY,onclone:doc=>{doc.body.classList.add("light");doc.querySelectorAll(".add-row,.add-field-button,.unit-remove,.row-action").forEach(node=>node.remove());doc.querySelectorAll(".editable").forEach(node=>{node.style.borderBottom="0";node.style.background="transparent"})}});const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!blob)throw Error("Canvas export failed");const url=URL.createObjectURL(blob),link=el("a");link.href=url;link.download=`client-kit-${root.dataset.template||"document"}.png`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);toast("PNG downloaded.")}catch(error){console.error(error);toast("PNG export failed. Try PDF or a smaller logo.")}finally{button.disabled=false;button.textContent="Save as PNG"}}
 function toast(message){const bar=$("#toast");if(!bar)return;bar.textContent=message;bar.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>bar.classList.remove("show"),3200)}
 async function saveStandalone(name,id){try{
@@ -320,7 +424,7 @@ async function saveStandalone(name,id){try{
     const clone=$("#document").cloneNode(true);
     clone.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
     const light=document.body.classList.contains("light")?" light":"";
-    const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(name)} — Client Templates</title><style data-kit-style>${css.replace(/<\/style/gi,"<\\/style")}</style></head><body data-page="standalone" class="${light.trim()}"><div class="editor-toolbar" role="toolbar" aria-label="Document tools"><span class="back-link">CLIENT TEMPLATES</span><div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="theme-button" class="tool-button muted-button" type="button">${light?"Dark mode":"Light mode"}</button><button id="save-button" class="tool-button" type="button">Save Edits</button><button id="download-button" class="tool-button" type="button">Download HTML</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="png-button" class="tool-button primary-button" type="button">Save as PNG</button></div></div><input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden><main class="editor-shell"><article id="document" class="document" data-template="${escapeHtml(id)}">${clone.innerHTML}</article></main><div id="toast" class="toast" role="status" aria-live="polite"></div><script data-kit-capture>${capture.replace(/<\/script/gi,"<\\/script")}<\/script><script data-kit-runtime>${js.replace(/<\/script/gi,"<\\/script")}<\/script></body></html>`;
+    const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(name)} — Client Templates</title><style data-kit-style>${css.replace(/<\/style/gi,"<\\/style")}</style></head><body data-page="standalone" class="${light.trim()}"><div class="editor-toolbar" role="toolbar" aria-label="Document tools"><span class="back-link">CLIENT TEMPLATES</span><div class="toolbar-actions"><button id="undo-button" class="tool-button muted-button" type="button">Undo</button><button id="logo-button" class="tool-button" type="button">Add logo</button><button id="add-section-button" class="tool-button" type="button">+ Section</button><button id="theme-button" class="tool-button muted-button" type="button">${light?"Dark mode":"Light mode"}</button><button id="save-button" class="tool-button" type="button">Save Edits</button><button id="download-button" class="tool-button" type="button">Download HTML</button><button id="pdf-button" class="tool-button primary-button" type="button">Save as PDF</button><button id="png-button" class="tool-button primary-button" type="button">Save as PNG</button></div></div><input id="logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden><main class="editor-shell"><article id="document" class="${escapeHtml(clone.className)}" data-template="${escapeHtml(id)}">${clone.innerHTML}</article></main><div id="toast" class="toast" role="status" aria-live="polite"></div><script data-kit-capture>${capture.replace(/<\/script/gi,"<\\/script")}<\/script><script data-kit-runtime>${js.replace(/<\/script/gi,"<\\/script")}<\/script></body></html>`;
     const url=URL.createObjectURL(new Blob([html],{type:"text/html"})),link=el("a");link.href=url;link.download=`client-kit-${id}-edited.html`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);toast("Editable HTML downloaded.")
   }catch(error){toast("Save failed. Please try again.");console.error(error)}}
 function escapeHtml(text){return text.replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[char])}

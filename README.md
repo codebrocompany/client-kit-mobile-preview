@@ -16,7 +16,7 @@ unavailable originals.
 - `complete/*.html` — 16 new self-contained editable documents, one file each,
   including Offer, Relieving, Experience, and Termination Letters.
 - `complete/editor.html`, `complete/app.js`, `complete/style.css` — source files
-  used to generate those 12 documents.
+  used to generate those 16 documents.
 
 Use the public mobile-test preview at
 `https://codebrocompany.github.io/client-kit-mobile-preview/`, or serve this
@@ -25,7 +25,8 @@ are self-contained HTML. Direct `file://` opening was not verified in the
 available browser environment.
 Tap any heading, label, value, or body text to edit it. A bracketed field
 clears on focus. Use **+ Section** and **+ Field** to add your own content.
-The red **×** removes one complete field pair, row, text block, or section;
+Tap a field, row, text block, or section to reveal its red **×**. Tap outside
+to hide it. The **×** removes that complete unit;
 the layout reflows immediately. **Undo** restores the last removal.
 **Add logo** accepts PNG, JPG, or WebP up
 to 1.5 MB; the logo is remembered in this browser across templates. **Save
@@ -45,6 +46,13 @@ For printing, choose A4 or US Letter and turn off the browser's "Print headers
 and footers" option. The original invoice can span two pages; its payment
 instructions now move together to the second page rather than leaving an
 orphan heading on the first.
+
+The offer letter follows a three-page A4 letterhead format: offer details,
+compensation Annexure A with signatures, and employment terms. Its fields
+remain editable and the salary table must be checked manually; it does not
+calculate compensation. A previous offer-letter draft, if present, remains
+on this device and can be opened with **Old draft**; the new format uses a
+separate draft slot so the older version is not silently overwritten.
 
 Review all placeholders, prices, payment details, and legal wording before
 sending a document to a client. No client data is sent by the local templates.
