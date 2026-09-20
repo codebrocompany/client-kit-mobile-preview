@@ -92,15 +92,20 @@
       .btn-download { top: 49px; right: 12px; padding: 7px 10px; }
     }
     @media print {
-      @page { size: auto; margin: 12mm; }
+      @page { size: A4; margin: 12mm; }
       html, body { background: #fff !important; color: #161a1d !important; color-scheme: light !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .document { width: auto !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #161a1d !important; border: 0 !important; }
-      .section-card, .callout { background: #fff !important; border-color: #cbd2d8 !important; }
+      .section-card, .callout { background: #fff !important; border-color: #555 !important; }
+      .callout { border-color: #b8954b !important; }
       .document .field-value, .document .doc-title, .document .logo-block { color: #161a1d !important; }
       .document .field-label, .document .body-text, .document .legal-text, .document .scope-list li, .document .clause-list li, .document .doc-subtitle, .document .footer-brand, .document .footer-page, .document .placeholder { color: #46515a !important; }
+      .document .legal-text strong { color: #161a1d !important; }
       .document .section-heading, .document .clause-num { color: #745515 !important; }
-      .document .doc-header, .document .doc-footer, .document .field-value, .document .scope-list li, .document .clause-list li, .document .signature-line { border-color: #cbd2d8 !important; }
+      .document .doc-header { border-color: #745515 !important; }
+      .document .doc-footer { border-color: #161a1d !important; }
+      .document .field-value, .document .scope-list li, .document .clause-list li, .document .signature-line { border-color: #424242 !important; }
       .section-heading { break-after: avoid; }
+      .signature-print-group { break-inside: avoid; page-break-inside: avoid; }
     }
   </style>
   <link rel="stylesheet" href="enhancements.css" data-kit-enhancement-style>
@@ -260,6 +265,7 @@
   </div>
 
   <!-- Signatures -->
+  <div class="signature-print-group">
   <div class="section-heading" style="margin-top:28px;">Signatures</div>
   <div class="body-text" style="margin-bottom:16px;">By signing below, both parties agree to the terms outlined in this agreement. This agreement becomes binding upon receipt of the deposit payment.</div>
   <div class="signature-grid">
@@ -285,6 +291,7 @@
         <div class="field-value placeholder">[DD Month YYYY]</div>
       </div>
     </div>
+  </div>
   </div>
 
   <footer class="doc-footer">
@@ -385,12 +392,12 @@
     var btn = document.querySelector('.btn-theme');
     if (!btn) return;
     var html = document.documentElement;
-    try { if (!html.hasAttribute('data-theme') && localStorage.getItem('client-kit-theme') === 'light') html.setAttribute('data-theme', 'light'); } catch (error) {}
+    try { if (!html.hasAttribute('data-theme') && localStorage.getItem('client-kit-theme-v2') === 'light') html.setAttribute('data-theme', 'light'); } catch (error) {}
     function sync() { btn.innerHTML = html.getAttribute('data-theme') === 'light' ? '&#9679; Dark' : '&#9788; Light'; }
     sync();
     btn.addEventListener('click', function() {
       html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-      try { localStorage.setItem('client-kit-theme', html.getAttribute('data-theme')); } catch (error) {}
+      try { localStorage.setItem('client-kit-theme-v2', html.getAttribute('data-theme')); } catch (error) {}
       sync();
     });
   })();

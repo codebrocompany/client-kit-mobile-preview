@@ -37,13 +37,15 @@ cleared by the user. **Download HTML** creates a portable editable backup with
 the logo embedded. **Save as PDF** opens
 the browser print dialog; **Save as PNG** downloads a full-length image. PNG
 and print exports use a light paper background and hide editing controls. The library and all documents
-also have a persistent light/dark screen theme. The detailed invoice calculates
+open in dark mode by default; Light mode is an explicit browser preference.
+The detailed invoice calculates
 its line amounts and totals from quantity, rate, and tax rate; those outputs
 can also be manually edited until a dependent input changes. The supplied
 original invoice retains editable amount text without automatic calculation.
 
-For printing, choose A4 or US Letter and turn off the browser's "Print headers
-and footers" option. The original invoice can span two pages; its payment
+For printing, A4 is the default paper size. Choose another size in the print
+dialog if necessary, and turn off the browser's "Print headers and footers"
+option. The original invoice can span two pages; its payment
 instructions now move together to the second page rather than leaving an
 orphan heading on the first.
 

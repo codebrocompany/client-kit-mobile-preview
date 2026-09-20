@@ -101,7 +101,7 @@
       .btn-download { top: 49px; right: 12px; padding: 7px 10px; }
     }
     @media print {
-      @page { size: auto; margin: 10mm; }
+      @page { size: A4; margin: 10mm; }
       html, body { background: #fff !important; color: #161a1d !important; color-scheme: light !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .document { width: auto !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #161a1d !important; border: 0 !important; }
       .section-card, .callout { background: #fff !important; border-color: #cbd2d8 !important; }
@@ -424,12 +424,12 @@
     var btn = document.querySelector('.btn-theme');
     if (!btn) return;
     var html = document.documentElement;
-    try { if (!html.hasAttribute('data-theme') && localStorage.getItem('client-kit-theme') === 'light') html.setAttribute('data-theme', 'light'); } catch (error) {}
+    try { if (!html.hasAttribute('data-theme') && localStorage.getItem('client-kit-theme-v2') === 'light') html.setAttribute('data-theme', 'light'); } catch (error) {}
     function sync() { btn.innerHTML = html.getAttribute('data-theme') === 'light' ? '&#9679; Dark' : '&#9788; Light'; }
     sync();
     btn.addEventListener('click', function() {
       html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-      try { localStorage.setItem('client-kit-theme', html.getAttribute('data-theme')); } catch (error) {}
+      try { localStorage.setItem('client-kit-theme-v2', html.getAttribute('data-theme')); } catch (error) {}
       sync();
     });
   })();
