@@ -341,14 +341,31 @@
   });
 
   let activeMediaSlot = null;
-  $('#media-input')?.addEventListener('change', event => {
+  async function mediaImageData(file) {
+    if (!/^image\/(png|jpeg|webp|heic|heif)$/.test(file.type) || file.size > 12000000) throw Error('Choose a PNG, JPG, WebP or HEIC image under 12 MB.');
+    if (file.size <= 550000 && !/heic|heif/.test(file.type)) return await new Promise((resolve, reject) => {
+      const reader = new FileReader();reader.onload = () => resolve(reader.result);reader.onerror = () => reject(Error('Could not read image.'));reader.readAsDataURL(file);
+    });
+    const url = URL.createObjectURL(file);
+    try {
+      const image = new Image();image.src = url;await image.decode();
+      for (const maxSide of [1000, 700, 500]) {
+        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+        const canvas = document.createElement('canvas');canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+        for (const format of [file.type === 'image/png' ? 'image/png' : 'image/jpeg', 'image/webp']) {
+          const data = canvas.toDataURL(format, .78);if (data.length <= 800000) return data;
+        }
+      }
+      throw Error('Image is too detailed. Try a closer photo or a smaller image.');
+    } finally { URL.revokeObjectURL(url); }
+  }
+  $('#media-input')?.addEventListener('change', async event => {
     const file = event.target.files?.[0], slot = activeMediaSlot;
     event.target.value = '';activeMediaSlot = null;
     if (!file || !slot?.isConnected) return;
-    if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type) || file.size > 600000) { toast('Use a PNG, JPG or WebP image under 600 KB.');return; }
-    const reader = new FileReader();
-    reader.onload = () => { if (!slot.isConnected) return;$('.media-preview', slot).src = reader.result;syncMediaSlot(slot);toast('Image added. Save Edits to keep it on this device.'); };
-    reader.readAsDataURL(file);
+    try { const data = await mediaImageData(file);if (!slot.isConnected) return;$('.media-preview', slot).src = data;syncMediaSlot(slot);toast('Image added. Save Edits to keep it on this device.'); }
+    catch (error) { toast(error.message || 'Could not use this image. Try a PNG or JPG.'); }
   });
 
   $('#png-button')?.addEventListener('click', async () => {

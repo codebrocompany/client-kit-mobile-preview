@@ -62,7 +62,8 @@ shared across the three offer pages. Existing offer drafts are kept, with
 missing logo/signature controls added when they reopen. The logo placeholder
 is excluded from PDF/PNG output until a real logo is uploaded.
 
-Signature areas now accept separate PNG, JPG, or WebP images up to 600 KB.
+Signature areas now accept separate PNG, JPG, WebP, or supported HEIC images
+up to 12 MB. Larger phone photos are resized locally before saving.
 The offer letter has candidate, employer, and HR signatures plus an optional
 employer stamp. Both client agreements provide provider/client signatures and
 an optional provider stamp. Both invoice formats include an optional
