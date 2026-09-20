@@ -50,6 +50,26 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .document[data-template="package-menu"] .doc-table th:nth-child(5){width:150px}
 .document[data-template="package-menu"] .doc-table td:nth-child(5) .editable{white-space:nowrap}
 @media print{.doc-table{min-width:0!important;width:100%!important;table-layout:auto!important}.doc-table .editable{white-space:normal!important}.table-scroll{overflow:visible!important}}
+/* Print uses tighter, readable A4 rhythm; keep the on-screen editor unchanged. */
+@media print{
+  .doc-head{padding-bottom:15px}
+  .doc-title{font-size:34px;margin:20px 0 5px}
+  .doc-description{margin-bottom:15px}
+  .doc-section{padding:11px 0 13px;orphans:3;widows:3}
+  .doc-section>h2{min-height:0;margin-bottom:8px;break-after:avoid-page}
+  .doc-section p{line-height:1.48;margin-bottom:6px;orphans:3;widows:3}
+  .fields{gap:8px 18px}
+  .fields,.invoice-totals{break-inside:avoid-page}
+  .field label{margin-bottom:2px}
+  .editable{min-height:19px;padding:0 1px 2px}
+  .doc-table th{padding:5px}
+  .doc-table td{padding:5px}
+  .doc-footer{margin-top:8px;padding-top:9px;break-inside:avoid-page}
+  .doc-section:last-of-type{margin-bottom:0}
+  .document[data-template="b-roll-checklist"] .doc-section:nth-of-type(3),
+  .document[data-template="project-brief"] .doc-section:nth-of-type(4),
+  .document[data-template="relieving-letter"] .doc-section:nth-of-type(3){break-before:page}
+}
 
 /* The offer letter uses a three-sheet A4 letterhead rather than the generic card layout. */
 .document.offer-document{--paper-ink:#171717;--paper-sub:#555;--line:#bdbdbd;--gold:#252525;background:transparent;border:0;box-shadow:none;padding:0;min-height:0;font-family:Georgia,"Times New Roman",serif;color:#171717}
