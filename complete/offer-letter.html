@@ -12,8 +12,11 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 @media(max-width:700px){.library-shell{padding:25px 20px}.header-rule{margin:24px 0 28px}.library-header{padding-bottom:32px}.starter-grid,.guide-grid{grid-template-columns:1fr}.starter-card{min-height:175px}.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-panel{padding:22px}.editor-toolbar{align-items:flex-start;flex-direction:column}.toolbar-actions{width:100%;justify-content:space-between}.toolbar-actions .tool-button{flex:1}.editor-intro{display:block}.editor-intro p:last-child{margin-top:6px}.doc-head{flex-direction:column}.doc-label{text-align:left}.fields{grid-template-columns:1fr}.site-footer{display:block}.site-footer span{display:block;margin:5px 0}}@media(max-width:410px){.collection-grid{grid-template-columns:1fr}.facts{gap:9px 16px}.tool-button{font-size:10px;padding:8px}.editor-shell{padding:20px 12px 60px}.document{padding:23px}.doc-table{font-size:10px}}
 @media print{@page{size:A4;margin:12mm}html,body{background:#fff!important;color:#161a1d!important;color-scheme:light!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}body{--bg:#fff;--panel:#fff;--panel2:#fff;--line:#cbd2d8;--text:#161a1d;--muted:#46515a;--dim:#626d76;--gold:#745515;--paper:#fff;--paper-ink:#161a1d;--paper-sub:#46515a;--shadow:none}.editor-toolbar,.editor-intro,.editor-note,.toast,.remove-button{display:none!important}.editor-shell{max-width:none;padding:0;margin:0}.document{border:0;box-shadow:none;background:#fff!important;color:#161a1d!important;min-height:0;padding:0}.doc-section{break-inside:auto}.doc-section h2{break-after:avoid}.doc-table tr,.field,.doc-footer{break-inside:avoid}.table-scroll{overflow:visible}.doc-footer{margin-top:12px}a{color:#161a1d}}
 .doc-brand>.editable,.doc-brand small .editable,.doc-title .editable,.doc-description .editable,.doc-section h2 .editable,.field label .editable,.doc-table th .editable,.doc-footer .editable,.total-row .editable{display:inline;min-height:0;padding:0;border-bottom:1px dashed #a98745;font:inherit;color:inherit;letter-spacing:inherit;line-height:inherit;text-transform:inherit}
+/* WebKit drops the caret when a focused inline placeholder becomes empty. */
+.doc-brand .editable[data-placeholder]{display:inline-block;min-width:1ch;max-width:100%;vertical-align:baseline}
 .company-logo{display:block;max-width:180px;max-height:72px;width:auto;height:auto;object-fit:contain;margin:0 0 12px}.company-logo[hidden]{display:none!important}
 .editable:focus:empty::before{content:""}.editable[contenteditable="false"]{border:0;cursor:default}
+.editable.placeholder-pending{color:transparent!important;caret-color:var(--paper-ink)}
 .add-field-button{border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--gold);font-size:11px;font-weight:700;padding:6px 10px;margin-top:18px}
 .add-field-button:hover{border-color:var(--gold)}
 .doc-description .editable,.doc-section p>.editable{white-space:pre-wrap}
@@ -83,6 +86,7 @@ body.light{--bg:#eef1f3;--panel:#fff;--panel2:#f7f8f9;--line:#cbd2d8;--text:#161
 .offer-page{display:flex;flex-direction:column;width:100%;min-height:1080px;margin:0 0 24px;padding:65px 76px 32px;background:#fff;border:1px solid #d6d6d6;box-shadow:0 16px 40px #0002;color:#171717;font-size:13px;line-height:1.25}
 .offer-letterhead{min-height:68px;margin-bottom:15px}.offer-letter-brand{min-height:57px}.offer-letter-brand .company-logo{max-height:62px;margin:0 0 3px}.offer-company-name{font:700 13px Arial,sans-serif;letter-spacing:.02em}.offer-letterhead-rule{height:1px;background:#181818;margin-top:8px}
 .offer-page-body{flex:1;min-width:0}.offer-page .editable{display:inline;min-height:0;padding:0;border:0;border-bottom:1px dashed #aaa;color:inherit;font:inherit;line-height:inherit;letter-spacing:inherit;text-transform:inherit;overflow-wrap:anywhere}.offer-page .editable:focus{background:#fff2ca;border-bottom-color:#a67518;outline:1px solid #ad8829}.offer-page .editable:empty::before{content:attr(data-placeholder)}
+.offer-page .editable[data-placeholder]{display:inline-block;min-width:1ch;max-width:100%;vertical-align:baseline}
 .offer-page p{margin:0 0 10px;color:#171717;font-size:13px;line-height:1.3}.offer-page .offer-paragraph{position:relative;padding-right:30px}.offer-page .offer-line{position:relative;margin:0 0 12px;padding-right:30px}.offer-page .offer-line strong{font-weight:700}.offer-page .offer-salutation{margin:20px 0 14px}.offer-reference-row{display:flex;justify-content:space-between;gap:18px;margin:0 0 18px}.offer-reference-value{position:relative;min-width:0;padding-right:28px}.offer-reference-value:last-child{text-align:right}.offer-recipient{margin-bottom:20px}.offer-recipient .offer-paragraph{margin:0}.offer-recipient .offer-paragraph:first-child{margin-bottom:14px}
 .offer-page .offer-heading{position:relative;font-size:13px;font-weight:700;letter-spacing:0;text-align:left;color:#171717;margin:18px 0 13px;padding-right:30px}.offer-page h1.offer-heading{text-align:center;font-size:15px;margin:10px 0 34px}.offer-page .offer-block{border:0;padding:0;margin:0 0 12px}.offer-page .offer-block h2{font-size:13px;letter-spacing:0;color:#171717;margin:0 0 11px;min-height:0;padding-right:28px}.offer-page .offer-block>.unit-remove{top:0}.offer-page .offer-block .fields{margin:8px 0}.offer-page .offer-block .field{padding-right:30px}.offer-page .add-field-button{font-family:Arial,sans-serif;font-size:9px;padding:3px 7px;margin:3px 0 7px;color:#555;border-color:#d4d4d4}
 .offer-bullets{padding-left:36px;margin:9px 0 17px}.offer-bullets li{position:relative;margin:0 0 6px;padding-right:30px}.offer-page-footer{position:relative;margin-top:auto;padding:11px 28px 0 0;border-top:2px solid #111;font:10px/1.35 Arial,sans-serif;color:#333}.offer-page-footer .editable{font:inherit}
@@ -533,7 +537,7 @@ function renderEditor(){
 }
 const draftKey=id=>`codebro-client-draft-${id==="offer-letter"?"v3":"v2"}:${id}`;
 const draftSchemaVersion=id=>id==="offer-letter"?4:1;
-function cleanDraftHtml(html){const template=document.createElement("template");template.innerHTML=html;template.content.querySelectorAll("script,iframe,object,embed,form,link,meta").forEach(node=>node.remove());template.content.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));template.content.querySelectorAll("*").forEach(node=>{for(const attribute of [...node.attributes])if(/^on/i.test(attribute.name)||/^(src|href)$/i.test(attribute.name)&&/^(javascript:|data:text\/html)/i.test(attribute.value))node.removeAttribute(attribute.name)});return template.innerHTML}
+function cleanDraftHtml(html){const template=document.createElement("template");template.innerHTML=html;template.content.querySelectorAll("script,iframe,object,embed,form,link,meta").forEach(node=>node.remove());template.content.querySelectorAll(".selected-unit,.placeholder-pending").forEach(node=>node.classList.remove("selected-unit","placeholder-pending"));template.content.querySelectorAll("*").forEach(node=>{for(const attribute of [...node.attributes])if(/^on/i.test(attribute.name)||/^(src|href)$/i.test(attribute.name)&&/^(javascript:|data:text\/html)/i.test(attribute.value))node.removeAttribute(attribute.name)});return template.innerHTML}
 function restoreDraft(root,id){try{const saved=JSON.parse(localStorage.getItem(draftKey(id))||"null");if(saved?.html){root.innerHTML=cleanDraftHtml(saved.html);if(id==="offer-letter"&&root.classList.contains("offer-document")){
       root.querySelectorAll(".offer-letter-brand").forEach(brand=>{if(brand.querySelector(".offer-logo-placeholder"))return;const button=el("button","offer-logo-placeholder","Add company logo");button.type="button";button.setAttribute("aria-label","Add or change company logo");button.title="Click to upload your company logo";brand.querySelector(".company-logo")?.after(button)});
       root.querySelectorAll(".offer-page-footer").forEach(foot=>{for(const node of [...foot.childNodes])if(node.nodeType===3&&node.textContent.includes("|")){node.replaceWith(document.createTextNode("  "),editable("|"),document.createTextNode("  "))}});
@@ -547,6 +551,11 @@ function wireEditor(){
   const root=$("#document"),id=root.dataset.template;
   let selectedUnit=null;
   root.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
+  function selectPlaceholder(field){
+    const selection=window.getSelection(),range=document.createRange();
+    range.selectNodeContents(field);
+    selection?.removeAllRanges();selection?.addRange(range);
+  }
   function selectUnit(unit){
     if(selectedUnit===unit)return;
     selectedUnit?.classList.remove("selected-unit");
@@ -558,9 +567,23 @@ function wireEditor(){
   root.addEventListener("focusin",event=>{
     const target=event.target;
     if(target.closest(".removable-unit"))selectUnit(target.closest(".removable-unit"));
-    if(target.matches(".editable[data-placeholder]")&&target.textContent.trim()===target.dataset.placeholder){target.textContent="";target.classList.remove("placeholder")}
+    if(target.matches(".editable[data-placeholder]")&&target.textContent.trim()===target.dataset.placeholder){target.classList.add("placeholder-pending");selectPlaceholder(target)}
   });
-  root.addEventListener("input",event=>{const target=event.target;if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
+  root.addEventListener("focusout",event=>event.target.classList?.remove("placeholder-pending"));
+  root.addEventListener("beforeinput",event=>{
+    const field=event.target;
+    if(!field.matches?.(".editable.placeholder-pending")||!event.inputType?.startsWith("insert"))return;
+    const value=event.data??event.dataTransfer?.getData("text/plain");
+    if(value==null||!event.cancelable){selectPlaceholder(field);return}
+    event.preventDefault();
+    field.textContent=value;
+    field.classList.remove("placeholder-pending");
+    const selection=window.getSelection(),range=document.createRange();
+    range.selectNodeContents(field);range.collapse(false);
+    selection?.removeAllRanges();selection?.addRange(range);
+    field.dispatchEvent(new InputEvent("input",{bubbles:true,inputType:event.inputType,data:value}));
+  });
+  root.addEventListener("input",event=>{const target=event.target;target.classList?.remove("placeholder-pending");if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
   root.addEventListener("click",event=>{
     const remove=event.target.closest(".unit-remove"),add=event.target.closest(".add-row"),addField=event.target.closest(".add-field-button");
     if(event.target.closest(".offer-logo-placeholder")){selectUnit(null);$("#logo-input")?.click();return}
@@ -572,6 +595,8 @@ function wireEditor(){
     if(add){$(".invoice-table tbody").append(makeInvoiceRow());updateTotalsFromAmounts();toast("Service row added.");return}
     if(addField){const section=addField.closest(".doc-section");let grid=$(".fields",section);if(!grid){grid=el("div","fields");section.insertBefore(grid,addField)}const field=makeField("[FIELD LABEL]","[ENTER DETAILS]");grid.append(field);$("label .editable",field).focus();toast("Field added.");return}
     selectUnit(event.target.closest(".removable-unit"));
+    const placeholderField=event.target.closest('.editable.placeholder-pending[contenteditable="true"]');
+    if(placeholderField)selectPlaceholder(placeholderField);
   });
   document.addEventListener("click",event=>{if(!root.contains(event.target))selectUnit(null)});
   $("#undo-button")?.addEventListener("click",undoRemoval);document.addEventListener("keydown",event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="z"&&!event.target.closest?.("[contenteditable=true]")&&removedItems.length){event.preventDefault();undoRemoval()}});

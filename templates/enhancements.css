@@ -13,6 +13,7 @@
 .add-field-button:hover{border-color:var(--gold)}
 .document [contenteditable="true"]:empty::before{content:attr(data-placeholder);color:var(--text-faint);font-style:italic}
 .document [contenteditable="true"]:focus:empty::before{content:""}
+.document [contenteditable="true"].placeholder-pending{color:transparent!important;caret-color:var(--text-primary)}
 html[data-theme="light"] .template-toolbar{background:#eef1f3}
 @media(max-width:820px){.template-toolbar{padding:8px 12px;gap:6px}.template-toolbar .btn-back{width:100%;margin-right:0}.template-toolbar>*{flex:1 0 auto}.template-toolbar .btn-back{flex:0 0 100%}.document{margin:16px auto 24px!important}.template-toolbar button{min-width:0}}
 @media print{.template-toolbar,.add-field-button,#logo-input{display:none!important}.document [contenteditable="true"]{outline:none!important}.document [contenteditable="true"]:empty::before{content:""}}

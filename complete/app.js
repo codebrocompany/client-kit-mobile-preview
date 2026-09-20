@@ -258,7 +258,7 @@ function renderEditor(){
 }
 const draftKey=id=>`codebro-client-draft-${id==="offer-letter"?"v3":"v2"}:${id}`;
 const draftSchemaVersion=id=>id==="offer-letter"?4:1;
-function cleanDraftHtml(html){const template=document.createElement("template");template.innerHTML=html;template.content.querySelectorAll("script,iframe,object,embed,form,link,meta").forEach(node=>node.remove());template.content.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));template.content.querySelectorAll("*").forEach(node=>{for(const attribute of [...node.attributes])if(/^on/i.test(attribute.name)||/^(src|href)$/i.test(attribute.name)&&/^(javascript:|data:text\/html)/i.test(attribute.value))node.removeAttribute(attribute.name)});return template.innerHTML}
+function cleanDraftHtml(html){const template=document.createElement("template");template.innerHTML=html;template.content.querySelectorAll("script,iframe,object,embed,form,link,meta").forEach(node=>node.remove());template.content.querySelectorAll(".selected-unit,.placeholder-pending").forEach(node=>node.classList.remove("selected-unit","placeholder-pending"));template.content.querySelectorAll("*").forEach(node=>{for(const attribute of [...node.attributes])if(/^on/i.test(attribute.name)||/^(src|href)$/i.test(attribute.name)&&/^(javascript:|data:text\/html)/i.test(attribute.value))node.removeAttribute(attribute.name)});return template.innerHTML}
 function restoreDraft(root,id){try{const saved=JSON.parse(localStorage.getItem(draftKey(id))||"null");if(saved?.html){root.innerHTML=cleanDraftHtml(saved.html);if(id==="offer-letter"&&root.classList.contains("offer-document")){
       root.querySelectorAll(".offer-letter-brand").forEach(brand=>{if(brand.querySelector(".offer-logo-placeholder"))return;const button=el("button","offer-logo-placeholder","Add company logo");button.type="button";button.setAttribute("aria-label","Add or change company logo");button.title="Click to upload your company logo";brand.querySelector(".company-logo")?.after(button)});
       root.querySelectorAll(".offer-page-footer").forEach(foot=>{for(const node of [...foot.childNodes])if(node.nodeType===3&&node.textContent.includes("|")){node.replaceWith(document.createTextNode("  "),editable("|"),document.createTextNode("  "))}});
@@ -272,6 +272,11 @@ function wireEditor(){
   const root=$("#document"),id=root.dataset.template;
   let selectedUnit=null;
   root.querySelectorAll(".selected-unit").forEach(node=>node.classList.remove("selected-unit"));
+  function selectPlaceholder(field){
+    const selection=window.getSelection(),range=document.createRange();
+    range.selectNodeContents(field);
+    selection?.removeAllRanges();selection?.addRange(range);
+  }
   function selectUnit(unit){
     if(selectedUnit===unit)return;
     selectedUnit?.classList.remove("selected-unit");
@@ -283,9 +288,23 @@ function wireEditor(){
   root.addEventListener("focusin",event=>{
     const target=event.target;
     if(target.closest(".removable-unit"))selectUnit(target.closest(".removable-unit"));
-    if(target.matches(".editable[data-placeholder]")&&target.textContent.trim()===target.dataset.placeholder){target.textContent="";target.classList.remove("placeholder")}
+    if(target.matches(".editable[data-placeholder]")&&target.textContent.trim()===target.dataset.placeholder){target.classList.add("placeholder-pending");selectPlaceholder(target)}
   });
-  root.addEventListener("input",event=>{const target=event.target;if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
+  root.addEventListener("focusout",event=>event.target.classList?.remove("placeholder-pending"));
+  root.addEventListener("beforeinput",event=>{
+    const field=event.target;
+    if(!field.matches?.(".editable.placeholder-pending")||!event.inputType?.startsWith("insert"))return;
+    const value=event.data??event.dataTransfer?.getData("text/plain");
+    if(value==null||!event.cancelable){selectPlaceholder(field);return}
+    event.preventDefault();
+    field.textContent=value;
+    field.classList.remove("placeholder-pending");
+    const selection=window.getSelection(),range=document.createRange();
+    range.selectNodeContents(field);range.collapse(false);
+    selection?.removeAllRanges();selection?.addRange(range);
+    field.dispatchEvent(new InputEvent("input",{bubbles:true,inputType:event.inputType,data:value}));
+  });
+  root.addEventListener("input",event=>{const target=event.target;target.classList?.remove("placeholder-pending");if(target.matches(".qty,.rate")){updateRowAmount(target.closest("tr"));updateTotalsFromAmounts()}else if(target.matches(".tax-rate,.subtotal"))updateTotalsFromSubtotal();else if(target.matches(".line-amount"))updateTotalsFromAmounts();else if(target.matches(".tax-amount"))updateTotalFromTax()});
   root.addEventListener("click",event=>{
     const remove=event.target.closest(".unit-remove"),add=event.target.closest(".add-row"),addField=event.target.closest(".add-field-button");
     if(event.target.closest(".offer-logo-placeholder")){selectUnit(null);$("#logo-input")?.click();return}
@@ -297,6 +316,8 @@ function wireEditor(){
     if(add){$(".invoice-table tbody").append(makeInvoiceRow());updateTotalsFromAmounts();toast("Service row added.");return}
     if(addField){const section=addField.closest(".doc-section");let grid=$(".fields",section);if(!grid){grid=el("div","fields");section.insertBefore(grid,addField)}const field=makeField("[FIELD LABEL]","[ENTER DETAILS]");grid.append(field);$("label .editable",field).focus();toast("Field added.");return}
     selectUnit(event.target.closest(".removable-unit"));
+    const placeholderField=event.target.closest('.editable.placeholder-pending[contenteditable="true"]');
+    if(placeholderField)selectPlaceholder(placeholderField);
   });
   document.addEventListener("click",event=>{if(!root.contains(event.target))selectUnit(null)});
   $("#undo-button")?.addEventListener("click",undoRemoval);document.addEventListener("keydown",event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="z"&&!event.target.closest?.("[contenteditable=true]")&&removedItems.length){event.preventDefault();undoRemoval()}});

@@ -7,6 +7,7 @@
     const template = document.createElement('template');
     template.innerHTML = html;
     template.content.querySelectorAll('script,iframe,object,embed,form,link,meta').forEach(node => node.remove());
+    template.content.querySelectorAll('.placeholder-pending,.selected-unit').forEach(node => node.classList.remove('placeholder-pending', 'selected-unit'));
     template.content.querySelectorAll('*').forEach(node => {
       for (const attribute of [...node.attributes]) if (/^on/i.test(attribute.name) || /^(src|href)$/i.test(attribute.name) && /^(javascript:|data:text\/html)/i.test(attribute.value)) node.removeAttribute(attribute.name);
     });
@@ -131,11 +132,21 @@
     refreshLayout();
     toast('Restored.');
   }
+  function selectPlaceholder(node) {
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
   doc.addEventListener('click', event => {
     const button = event.target.closest('.unit-remove');
     if (!button) {
       if (event.target.closest('.add-field-button')) return;
       selectUnit(event.target.closest('.removable-unit'));
+      const placeholder = event.target.closest('[contenteditable="true"].placeholder-pending');
+      if (placeholder) selectPlaceholder(placeholder);
       return;
     }
     const unit = button.closest('.removable-unit');
@@ -163,10 +174,28 @@
     const text = node.textContent.trim();
     if (node.children.length === 0 && /^\[[\s\S]+\]$/.test(text)) {
       node.dataset.placeholder = text;
-      node.textContent = '';
-      node.classList.remove('placeholder');
+      node.classList.add('placeholder-pending');
+      selectPlaceholder(node);
     }
   });
+  doc.addEventListener('focusout', event => event.target.classList?.remove('placeholder-pending'));
+  doc.addEventListener('beforeinput', event => {
+    const node = event.target;
+    if (!node.matches?.('[contenteditable="true"].placeholder-pending') || !event.inputType?.startsWith('insert')) return;
+    const value = event.data ?? event.dataTransfer?.getData('text/plain');
+    if (value == null || !event.cancelable) { selectPlaceholder(node); return; }
+    event.preventDefault();
+    node.textContent = value;
+    node.classList.remove('placeholder-pending', 'placeholder');
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    range.collapse(false);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    node.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  doc.addEventListener('input', event => event.target.classList?.remove('placeholder-pending'));
 
   function makeField() {
     const wrap = document.createElement('div');
