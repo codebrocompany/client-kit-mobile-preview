@@ -185,7 +185,50 @@ html[data-theme="light"] .template-toolbar{background:#eef1f3}
 @media print{.media-actions,.media-slot:not(.has-image),#media-input{display:none!important}.media-slot.has-image{break-inside:avoid}}
 </style>
   
-<script nonce="public-preview" data-kit-storage>const localStorage={getItem:k=>window.localStorage.getItem("dk:public-preview:"+k),setItem:(k,v)=>window.localStorage.setItem("dk:public-preview:"+k,v),removeItem:k=>window.localStorage.removeItem("dk:public-preview:"+k)};</script><link rel="stylesheet" href="/client-kit-mobile-preview/preview/editor-bridge.css"></head>
+<script nonce="public-preview" data-kit-storage>const localStorage={getItem:k=>window.localStorage.getItem("dk:public-preview:"+k),setItem:(k,v)=>window.localStorage.setItem("dk:public-preview:"+k,v),removeItem:k=>window.localStorage.removeItem("dk:public-preview:"+k)};</script><link rel="stylesheet" href="/client-kit-mobile-preview/preview/editor-bridge.css"><style data-mobile-editor>#mobile-more{display:none}
+@media screen and (max-width:600px){
+ .compact-editor-tools{flex-direction:row!important}
+ .compact-editor-tools{position:sticky!important;top:0!important;display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 10px!important;justify-content:space-between!important;align-items:center!important;width:100%!important;box-sizing:border-box;min-height:60px!important;background:#111!important;border-bottom:1px solid #353535!important}
+ .compact-editor-tools>a,.compact-editor-tools>button{margin:0!important;min-height:42px!important;width:auto!important;flex:1 1 auto!important;padding:8px 10px!important;font:600 12px/1.2 Arial,sans-serif!important;letter-spacing:0!important;text-transform:none!important;border-radius:8px!important}
+ .compact-editor-tools>:not(.mobile-primary):not(#mobile-more){display:none!important}
+ .compact-editor-tools #mobile-more{display:block!important;order:4;background:transparent;color:#ddd;border:1px solid #444}
+ .compact-editor-tools>a{order:0!important;flex:0 1 auto!important}
+ .compact-editor-tools .btn-save,.compact-editor-tools #save-button{order:2!important}
+ .compact-editor-tools .btn-download,.compact-editor-tools #pdf-button{order:1!important}
+ .compact-editor-tools.tools-expanded>:not(.mobile-primary):not(#mobile-more){display:block!important;order:5!important;flex:1 1 28%!important}
+ .light .compact-editor-tools,[data-theme="light"] .compact-editor-tools{background:#fff!important;border-color:#ddd!important}.light #mobile-more,[data-theme="light"] #mobile-more{color:#333!important}
+ body{padding-top:0!important}.editor-shell{padding:12px!important}.editor-intro{display:none!important}
+ .document:not(.institution-card):not(.institution-certificate){width:auto!important;max-width:none!important;margin:12px 10px!important;padding:20px 16px!important;min-height:0!important;border-radius:12px!important}
+ .editor-shell>.document:not(.institution-card):not(.institution-certificate){margin:0!important}
+ .document .doc-header,.document .doc-head{gap:16px!important;margin-bottom:24px!important;padding-bottom:18px!important}
+ .document .logo-block,.document .business-name{font-size:20px!important;line-height:1.3!important}
+ .document .invoice-title,.document .doc-title{font-size:25px!important;line-height:1.2!important;letter-spacing:0!important}
+ .document .meta-block{text-align:left!important}.document .logo-sub{font-size:12px!important;margin-bottom:0!important}
+ .document .section,.document .doc-section{margin-bottom:24px!important;padding-top:0!important}
+ .document .section-heading,.document .doc-section>h2{font-size:12px!important;letter-spacing:.06em!important;margin-bottom:12px!important}
+ .document .section-card{padding:14px!important;margin-bottom:14px!important}
+ .document .field-pair,.document .field{margin-bottom:12px!important}
+ .document .field-label,.document .field>label{font-size:11px!important;line-height:1.4!important;letter-spacing:.02em!important;margin:0 0 5px!important}
+ .document .field-value,.document .field>.editable{font-size:16px!important;line-height:1.45!important;min-height:44px!important;padding:10px!important;border:1px solid #414141!important;border-radius:7px!important;background:#202020!important;box-sizing:border-box;margin:0!important}
+ .document .placeholder,.document .unfilled{color:#aaa!important;font-style:normal!important}
+ .light .document .field-value,.light .document .field>.editable,[data-theme="light"] .document .field-value{background:#fafafa!important;border-color:#ccc!important;color:#222!important}
+ .document .two-col,.document .signature-grid{gap:18px!important}
+ .document .doc-footer{margin-top:20px!important;padding-top:14px!important;font-size:10px!important}
+ .document .mobile-line-items,.document .mobile-line-items tbody{display:block!important}
+ .document .mobile-line-items thead{display:none!important}
+ .document .mobile-line-items tbody tr{display:grid!important;grid-template-columns:1fr 1fr 1fr;gap:10px!important;padding:14px!important;margin:0 0 12px!important;background:#1d1d1d;border:1px solid #383838;border-radius:9px}
+ .document .mobile-line-items td{display:block!important;width:auto!important;padding:0!important;border:0!important;text-align:left!important;min-width:0;font-size:14px!important}
+ .document .mobile-line-items td.mobile-description{grid-column:1/-1}
+ .document .mobile-line-items tr{position:relative}
+ .document .mobile-line-items td.row-action{position:absolute;right:0;top:0;width:0!important;height:0;padding:0!important}
+ .document .mobile-line-items td.row-action:before{display:none}
+ .document .mobile-line-items td:before{content:attr(data-mobile-label);display:block;font:11px/1.4 Arial,sans-serif;color:#aaa;margin-bottom:6px}
+ .document .mobile-line-items td [contenteditable]{font-size:16px!important;line-height:1.5!important;min-height:32px;overflow-wrap:anywhere}
+ .light .document .mobile-line-items tr,[data-theme="light"] .document .mobile-line-items tr{background:#fafafa;border-color:#ddd}
+ .document .add-field-button{margin:8px 0!important;min-height:36px}.document .totals{width:100%!important;padding:10px 0!important}
+}
+@media print{#mobile-more{display:none!important}}
+</style></head>
 <body data-offline="true">
 <div class="template-toolbar" role="toolbar" aria-label="Document tools">
 <a class="btn-back" href="/library">← Template Library</a>
@@ -1034,6 +1077,25 @@ html[data-theme="light"] .template-toolbar{background:#eef1f3}
  const checkButton=document.createElement('button');checkButton.textContent='Check document';checkButton.onclick=()=>{const n=check();message(n?`${n} blank or placeholder field(s) need review.`:'No blank or bracketed fields found. Review amounts and facts before issuing.');};bar.append(checkButton);
  if(draftId){save.disabled=true;root.setAttribute('inert','');api('/api/drafts/'+encodeURIComponent(draftId)).then(row=>{if(row.template_id!==id)throw Error('This draft belongs to a different template.');root.innerHTML=row.payload.html;name.value=row.name;revision=row.revision;ready=true;window.ensureMediaSlots?.(root);window.syncInstituteLayout?.(root,id);status.textContent='Account draft opened. Save to account to sync further edits.';}).catch(e=>{status.textContent=e.message;message(e.message);}).finally(()=>{root.removeAttribute('inert');save.disabled=!ready;});}
  save.onclick=async()=>{if(!ready)return;save.disabled=true;try{const clone=root.cloneNode(true);clone.querySelectorAll('.selected-unit').forEach(n=>n.classList.remove('selected-unit'));const row=await api('/api/drafts',{id:draftId||undefined,revision:revision??undefined,template_id:id,name:name.value,html:clone.innerHTML});draftId=row.id;revision=row.revision;history.replaceState(null,'',location.pathname+'?draft='+encodeURIComponent(row.id));dirty=false;status.textContent='Saved to your account · '+new Date().toLocaleTimeString();message('Account draft saved.');}catch(e){message(e.message);status.textContent=e.message;}finally{save.disabled=false;}};
+})();
+</script><script nonce="public-preview" data-mobile-editor>(()=>{
+ const bar=document.querySelector('.template-toolbar,.editor-toolbar');if(!bar)return;
+ bar.classList.add('compact-editor-tools');
+ const actions=bar.querySelector('.toolbar-actions');
+ if(actions){while(actions.firstChild)bar.append(actions.firstChild);actions.remove();}
+ let more=bar.querySelector('#mobile-more');
+ if(!more){more=document.createElement('button');more.id='mobile-more';more.type='button';more.textContent='More';bar.append(more);}
+ const back=bar.querySelector('a');if(back){back.textContent='Library';back.classList.add('mobile-primary');}
+ const save=bar.querySelector('#save-button,.btn-save'),pdf=bar.querySelector('#pdf-button,.btn-download');
+ if(save){save.textContent='Save';save.title='Save in this browser';save.classList.add('mobile-primary');}
+ if(pdf){pdf.textContent='Export PDF';pdf.classList.add('mobile-primary');}
+ more.setAttribute('aria-expanded','false');bar.classList.remove('tools-expanded');
+ more.onclick=()=>{const open=bar.classList.toggle('tools-expanded');more.setAttribute('aria-expanded',String(open));more.textContent=open?'Close':'More';};
+ document.addEventListener('click',e=>{if(!bar.contains(e.target)||e.target.closest('button:not(#mobile-more)')){bar.classList.remove('tools-expanded');more.setAttribute('aria-expanded','false');more.textContent='More';}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){bar.classList.remove('tools-expanded');more.setAttribute('aria-expanded','false');more.textContent='More';}});
+ const doc=document.querySelector('.document');
+ function labelTables(){doc?.querySelectorAll('table').forEach(table=>{const headings=[...table.querySelectorAll('thead th:not(.row-action)')];if(headings.length!==4)return;table.classList.add('mobile-line-items');const heads=headings.map(n=>n.textContent.trim());table.querySelectorAll('tbody tr').forEach(row=>[...row.cells].filter(cell=>!cell.classList.contains('row-action')).forEach((cell,i)=>{cell.dataset.mobileLabel=heads[i]||'';cell.classList.toggle('mobile-description',i===0);}));});}
+ labelTables();if(doc)new MutationObserver(labelTables).observe(doc,{childList:true,subtree:true});
 })();
 </script><script>(()=>{const base="/client-kit-mobile-preview/preview/";function rewrite(){document.querySelectorAll('a[href^="/"]').forEach(a=>{const raw=a.getAttribute('href');if(raw.startsWith(base))return;const u=new URL(raw,location.origin);a.href=u.pathname.startsWith('/editor/')?base+'editor/'+u.pathname.split('/').pop()+'.html':base+'?page='+encodeURIComponent(u.pathname)+(u.search?'&'+u.search.slice(1):'')+u.hash;});}rewrite();new MutationObserver(rewrite).observe(document.body,{childList:true,subtree:true});})();</script></body>
 </html>
